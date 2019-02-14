@@ -41,4 +41,11 @@ class MainActivity : AppCompatActivity() {
         // Start the new activity.
         startActivity(secondIntent)
     }
+
+    fun gotoMaps(view: View) {
+        val thirdIntent = Intent(this, MapsActivity::class.java)
+
+        // Start the new activity.
+        startActivity(thirdIntent)
+    }
 }
