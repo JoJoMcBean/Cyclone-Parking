@@ -41,6 +41,15 @@ class user_loginController {
         else return null;
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
+    public user_login deleteUser(@Valid @RequestBody user_login deleteUser){
+        if(user_loginRepository.existsById(deleteUser.getUsername())) {
+            user_loginRepository.delete(deleteUser);
+            return deleteUser;
+        }
+        return null;
+    }
+
 
     @RequestMapping(method = RequestMethod.GET, path = "/users")
     public List<user_login> getAllUsers() {
@@ -55,5 +64,11 @@ class user_loginController {
         Optional<user_login> results = user_loginRepository.findById(username);
         return results;
     }
+    @RequestMapping(method = RequestMethod.GET, path = "/usernames")
+    public List<String> getUsernames(){
+        List<String> results = user_loginRepository.getUsernames();
+        return results;
+    }
+    
 
 }
