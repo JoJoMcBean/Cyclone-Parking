@@ -33,6 +33,7 @@ public class user_login {
     @NotFound(action = NotFoundAction.IGNORE)
     private String user_type;
 
+    
 
     @Column(name = "email")
     @NotFound(action = NotFoundAction.IGNORE)
