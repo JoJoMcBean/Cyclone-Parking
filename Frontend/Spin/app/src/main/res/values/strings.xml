@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Spin</string>
+    <string-array name="lot">
+        <item>Lot1</item>
+        <item>Lot2</item>
+        <item>Lot3</item>
+        <item>Lot4</item>
+    </string-array>
+</resources>
