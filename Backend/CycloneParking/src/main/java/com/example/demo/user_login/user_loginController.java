@@ -1,13 +1,13 @@
 package com.example.demo.user_login;
 
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +18,29 @@ class user_loginController {
 
     @Autowired
     user_loginRepository user_loginRepository;
+    userService userService;
 
     private final Logger logger = LoggerFactory.getLogger(user_loginController.class);
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/add/user")
-    public user_login createUser(@Valid @RequestBody user_login newUser) {
-        return user_loginRepository.save(newUser);
+    public user_login createUser(@Valid @RequestBody user_login user) {
+
+            if(!user_loginRepository.existsById(user.getUsername()) && user.getUsername() != "" && user.getPassword() != "" && user.getUser_type() != "" && user.getEmail() != "") {
+               return user_loginRepository.save(user);
+            }
+            return null;
+
+        }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/update")
+    public user_login update(@Valid @RequestBody user_login updateUser){
+        if(user_loginRepository.existsById(updateUser.getUsername())) {
+            return user_loginRepository.save(updateUser);
+        }
+        else return null;
     }
+
 
     @RequestMapping(method = RequestMethod.GET, path = "/users")
     public List<user_login> getAllUsers() {
