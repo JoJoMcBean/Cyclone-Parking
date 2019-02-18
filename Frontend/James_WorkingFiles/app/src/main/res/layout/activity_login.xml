@@ -36,8 +36,8 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -77,11 +77,20 @@
 
             <Button
                 android:id="@+id/login_button"
-                style="?android:textAppearanceSmall"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="Login"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/sign_up_button"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Not Registered?"
                 android:textStyle="bold" />
 
         </LinearLayout>

@@ -102,11 +102,20 @@
 
             <Button
                 android:id="@+id/register_button"
-                style="?android:textAppearanceSmall"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Register"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/login_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Already a user?"
                 android:textStyle="bold" />
 
         </LinearLayout>

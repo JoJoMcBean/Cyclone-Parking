@@ -3,12 +3,12 @@ package com.example.cyparking;
 public class userSchema {
     private String username;
     private String password;
-    private String email;
     private String userType;
-    public userSchema(String userType, String username, String password, String email) {
+    private String email;
+    public userSchema(String username, String password, String userType, String email) {
         this.username = username;
         this.password = password;
-        this.userType = username;
+        this.userType = userType;
         this.email = email;
     }
     public String getUsername() {

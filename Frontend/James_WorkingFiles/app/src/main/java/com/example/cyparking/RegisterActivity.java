@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mUsernameView, mPasswordView, mUsertypeView;
-    private Button mRegisterBtn;
+    private Button mRegisterBtn, mLoginBtn;
     private ProgressBar mProgressBar;
     private static String URL_REGIST = "http://cs309-yt-2.misc.iastate.edu:8080";
     private View mProgressView;
@@ -105,12 +105,20 @@ public class RegisterActivity extends AppCompatActivity {
         mPasswordView = findViewById(R.id.password);
         mUsertypeView = findViewById(R.id.usertype);
         mRegisterBtn = findViewById(R.id.register_button);
+        mLoginBtn = findViewById(R.id.login_button);
         mProgressBar = findViewById(R.id.register_progress);
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 Regist();
+            }
+        });
+
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
@@ -135,31 +143,28 @@ public class RegisterActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //if (!js.isNull("user_type") && !js.isNull("username") && !js.isNull("email"))
 
         //Send JSON object to controller. Use response to verify success.
         JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, URL_REGIST + "/add/user", js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Response", response.toString());
-                        if (response != null) {
-                            Toast.makeText(RegisterActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class)); //Go to login
-                        } else {
-                            Toast.makeText(RegisterActivity.this, "Register Failed.", Toast.LENGTH_SHORT).show();
+                        Log.d("Response", response.toString() + " this user");
+                        Toast.makeText(RegisterActivity.this, "Register Success!", Toast.LENGTH_SHORT).show();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class)); //Go to login
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(RegisterActivity.this, "Register Error!" + error.toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Register Failed! Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                        Log.d("ON ERROR RESPONSE", "" + error.toString());
                         mProgressBar.setVisibility(View.GONE);
                         mRegisterBtn.setVisibility(View.VISIBLE);
                     }

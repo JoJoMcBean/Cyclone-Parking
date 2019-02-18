@@ -90,9 +90,9 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private Button mLoginBtn;
+    private Button mLoginBtn, mSignUpBtn;
     private ProgressBar mProgressBar;
-    private static String URL = "http://cs309-yt-2.misc.iastate.edu/";
+    private static String URL = "http://cs309-yt-2.misc.iastate.edu:8080";
     private View mProgressView;
     private View mLoginFormView;
 
@@ -108,7 +108,8 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView = findViewById(R.id.email);
         mPasswordView = findViewById(R.id.password);
         mLoginBtn = findViewById(R.id.login_button);
-        mProgressBar = findViewById(R.id.register_progress);
+        mSignUpBtn = findViewById(R.id.sign_up_button);
+        mProgressBar = findViewById(R.id.login_progress);
 
         mQueue = Volley.newRequestQueue(this);
 
@@ -116,6 +117,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Login();
+            }
+        });
+
+        mSignUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
@@ -140,11 +148,19 @@ public class LoginActivity extends AppCompatActivity {
                                 String password = user.getString("password");
                                 String userType = user.getString("user_type");
                                 String email = user.getString("email");
-                                userSchema userData = new userSchema(userType, username, password, email);
+                                userSchema userData = new userSchema(username, password, userType, email);
                                 mEntries.add(userData);
                             } catch (JSONException e) {
                                 errors.add("Error: " + e.getLocalizedMessage());
                             }
+                        }
+                        Log.d("Num Users", "There are " + mEntries.size() + " users on this database.");
+                        if (loginVerify(mEntries, email, password)) {
+                            startActivity(new Intent(LoginActivity.this, Dashboard.class)); //Go to dashboard
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                            mProgressBar.setVisibility(View.GONE);
+                            mLoginBtn.setVisibility(View.VISIBLE);
                         }
                     }
                 },
@@ -155,18 +171,17 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-        Log.d("Num Users: ", Integer.toString(mEntries.size()));
         mQueue.add(usersRequest);
-        loginVerify(email, password);
     }
 
     //Temporary Login Verification
-    public void loginVerify(String email, String password) {
-        for (int i = 0; i < mEntries.size(); i++) {
-            if (mEntries.get(i).getEmail().equals(email) && mEntries.get(i).getPassword().equals(password)) {
-                startActivity(new Intent(LoginActivity.this, Dashboard.class)); //Go to dashboard
+    public boolean loginVerify(ArrayList<userSchema> users, String email, String password) {
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getEmail().equals(email) && users.get(i).getPassword().equals(password)) {
+                return true;
             }
         }
+        return false;
     }
 }
 
