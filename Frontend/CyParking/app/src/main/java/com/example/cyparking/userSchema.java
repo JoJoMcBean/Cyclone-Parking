@@ -23,7 +23,7 @@ public class userSchema {
     public String getUserType() {
         return userType;
     }
-    public void setPassword(String password) {
+    /*public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 }
