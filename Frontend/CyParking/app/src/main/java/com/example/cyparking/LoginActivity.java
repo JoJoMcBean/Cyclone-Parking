@@ -158,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         */
 
+        final String verify = username + "," + password;
         //Get ALL users and put into "mEntries"
         StringRequest verifyUserInfo = new StringRequest(Request.Method.POST, URL + "/authentication",
                 new Response.Listener<String>() {
@@ -182,13 +183,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
             }){
                 @Override
-                protected Map<String,String> getParams(){
+                protected Map<String,String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
-                    params.put("username", username);
-                    params.put("password", password);
-
+                    params.put("userpass", verify);
                     return params;
                 }
+
             };
         mQueue.add(verifyUserInfo);
     }
