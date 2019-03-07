@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private String URL = "https://api.myjson.com/bins/1b5d2a";
     Spinner spinner;
     TextView  result, avaiablity;
-    Button parse ;
+    Button parse, nextpage ;
     PieChart piechart;
 
     ParkingLot parkinglot1;
@@ -69,7 +69,31 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         requestQueue = Volley.newRequestQueue(this);
         avaiablity = (TextView) findViewById(R.id.availibty);
         avaiablity.setAlpha(0.0f);
+        nextpage = (Button) findViewById(R.id.button2);
+        nextpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                String ava, unava;
+                boolean[] spots_status = new boolean[parkinglot1.getSpots_quantity()];
+                for(int i=0; i<spots_status.length; i++)
+                {
+                    spots_status[i] = parkinglot1.getNumStatus(i);
+                }
+
+                ava = Integer.toString(available_spot);
+                unava = Integer.toString(unavailable_spot);
+                Intent newpage = new Intent(getApplicationContext(),lot_Page.class);
+                newpage.putExtra("Available",ava);
+                newpage.putExtra("Unavailable",unava);
+                newpage.putExtra("Spot_Array",spots_status);
+
+               // Toast.makeText(getApplicationContext(), Integer.toString(available_spot), Toast.LENGTH_SHORT).show();
+                startActivity(newpage);
+
+
+            }
+        });
 
 
 
@@ -80,14 +104,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 JsonArrayParse();
-                pieData.add(new SliceValue((float)unavailable_spot, Color.BLUE).setLabel("Unavailable Spots: " + Integer.toString(unavailable_spot)));
-                pieData.add(new SliceValue((float) available_spot, Color.GRAY).setLabel("Available Spots: " +  Integer.toString(available_spot)));
-                PieChartData pieChartData = new PieChartData(pieData);
-                pieChartData.setHasLabels(true);
-                pieChartView.setPieChartData(pieChartData);
-                avaiablity.setAlpha(1.0f);
-                avaiablity.setText("Total Available Spots: " + Integer.toString(parkinglot1.getTotalAvailableSpots())+"\n"
-                        + "Total Unavailable Spots: " +  Integer.toString(parkinglot1.getTotalUnavailableSpots()));
+
 
 
 
@@ -111,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //String text = parent.getItemAtPosition(position).toString();
 
-        JsonArrayParse();
+
         Toast.makeText(this, "Available Spots: " + available_spot,Toast.LENGTH_LONG).show();
 
 
@@ -127,21 +144,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void JsonArrayParse(){
 
 
-        String url  = "https://api.myjson.com/bins/1b5d2a";
+        String url  = "http://cs309-yt-2.misc.iastate.edu:8080/lot0";
         String url_lot2 = "https://api.myjson.com/bins/axzrm";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
                 try {
-                    JSONArray jsonArray = response.getJSONArray("lot1");
-                    parkinglot1 = new ParkingLot(jsonArray.length());
+                    Log.d("xxx", "onResponse: spot added");
+                    parkinglot1 = new ParkingLot(response.length());
 
-                    for(int i=0; i<jsonArray.length(); i++)
+                    for(int i=0; i<response.length(); i++)
                     {
 
-                        JSONObject lot1 = jsonArray.getJSONObject(i);
-                        int num_spot = lot1.getInt("SpotNum");
-                        boolean status = lot1.getBoolean("Filled");
+                        JSONObject lot1 = response.getJSONObject(i);
+                        int num_spot = lot1.getInt("spotNum");
+                        boolean status = lot1.getBoolean("isFilled");
                         //result.append(String.valueOf(num_spot) + "      "  + Boolean.toString(status)+ "\n\n");  Parse the information
                         if(status == false)
                         {
@@ -151,9 +168,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     }
                     available_spot = parkinglot1.getTotalAvailableSpots();
                     unavailable_spot = parkinglot1.getTotalUnavailableSpots();
-
-
-
+                    pieData.add(new SliceValue((float)unavailable_spot, Color.BLUE).setLabel("Unavailable Spots: " + Integer.toString(unavailable_spot)));
+                    pieData.add(new SliceValue((float) available_spot, Color.GRAY).setLabel("Available Spots: " +  Integer.toString(available_spot)));
+                    PieChartData pieChartData = new PieChartData(pieData);
+                    pieChartData.setHasLabels(true);
+                    pieChartView.setPieChartData(pieChartData);
+                    avaiablity.setAlpha(1.0f);
+                    avaiablity.setText("Total Available Spots: " + Integer.toString(parkinglot1.getTotalAvailableSpots())+"\n"
+                            + "Total Unavailable Spots: " +  Integer.toString(parkinglot1.getTotalUnavailableSpots()));
 
 
                 } catch (JSONException e) {
@@ -175,6 +197,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     }
+
+
+
+
 }
 
 
