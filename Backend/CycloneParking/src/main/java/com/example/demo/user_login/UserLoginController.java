@@ -74,23 +74,14 @@ class UserLoginController {
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/authentication")
-    public String login(@RequestBody String userpass) {
-        String parsed = "";
-        Scanner s = new Scanner(userpass);
-        while(s.hasNext()){
-            if(s.next().contains(":")){
-                parsed = s.next();
-            }
-        }
-        parsed = parsed.substring(1, parsed.length() - 1);
-        String[] login = parsed.split(",");
+    public String login(String userpass) {
+        String[] login = userpass.split(",");
 
         String username = login[0];
         String password = login[1];
-        //logger.info(login[0]);
-        //logger.info(login[1]);
+        logger.info(login[0]);
+        logger.info(login[1]);
         UserLogin userCheck = user_loginRepository.getUser(username);
-        logger.info(userCheck.getPassword());
         String token = null;
         if(userCheck.getPassword().equals(password) && user_loginRepository.existsById(username)){
             token = String.valueOf(UUID.randomUUID());

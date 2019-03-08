@@ -23,13 +23,13 @@ public class Lot_One {
     public Integer getSpotNum(){
         return spotnum;
     }
-    public boolean getIsFilled(){
+    public boolean getisFilled(){
         return filled;
     }
-    public void setSpotNum(Integer spotNum){
+    public void setspotNum(Integer spotNum){
         this.spotnum = spotNum;
     }
-    public void setfilled(boolean filled){
+    public void setisFilled(boolean filled){
         this.filled = filled;
     }
 }

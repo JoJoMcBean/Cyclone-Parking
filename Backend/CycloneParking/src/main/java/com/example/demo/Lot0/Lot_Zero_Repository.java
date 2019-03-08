@@ -15,4 +15,6 @@ public interface Lot_Zero_Repository extends JpaRepository<Lot_Zero, Integer> {
     @Query(value = "SELECT spotnum FROM Lot_Zero WHERE isfilled = false")
     List<Integer> getEmpty();
 
+
+
 }

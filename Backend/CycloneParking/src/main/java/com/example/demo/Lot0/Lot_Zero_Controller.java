@@ -27,6 +27,7 @@ public class Lot_Zero_Controller {
         return results;
     }
 
+
     @RequestMapping(method = RequestMethod.POST, value = "/updatelot0")
     public Lot_Zero update(@Valid @RequestBody Lot_Zero updateSpot){
         if(lot0Repository.existsById(updateSpot.getSpotNum())) {

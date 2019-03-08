@@ -17,7 +17,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
 
 @Entity
-@Table(name = "UserLogin")
+@Table(name = "user_login")
 public class UserLogin {
 
     @Id
@@ -37,6 +37,14 @@ public class UserLogin {
     @Column(name = "email")
     @NotFound(action = NotFoundAction.IGNORE)
     private String email;
+
+    @Column(name = "token")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private String token;
+
+    public String getToken(){return token;}
+
+    public void setToken(String token){this.token = token;}
 
     public String getUsername() {
         return username;
