@@ -91,9 +91,9 @@ public class RegisterActivity extends AppCompatActivity {
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mUsernameView, mPasswordView, mUsertypeView;
-    private Button mRegisterBtn, mLoginBtn;
+    private Button mContinueBtn, mLoginBtn;
     private ProgressBar mProgressBar;
-    private static String URL_REGIST = "http://cs309-yt-2.misc.iastate.edu:8080";
+    private static String URL = "http://cs309-yt-2.misc.iastate.edu:8080";
     private View mProgressView;
     private View mLoginFormView;
 
@@ -106,11 +106,11 @@ public class RegisterActivity extends AppCompatActivity {
         mUsernameView = findViewById(R.id.username);
         mPasswordView = findViewById(R.id.password);
         mUsertypeView = findViewById(R.id.usertype);
-        mRegisterBtn = findViewById(R.id.register_button);
+        mContinueBtn = findViewById(R.id.continue_button);
         mLoginBtn = findViewById(R.id.login_button);
         mProgressBar = findViewById(R.id.register_progress);
 
-        mRegisterBtn.setOnClickListener(new View.OnClickListener() {
+        mContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 Regist();
@@ -128,13 +128,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void Regist() {
         mProgressBar.setVisibility(View.VISIBLE);
-        mRegisterBtn.setVisibility(View.GONE);
+        mContinueBtn.setVisibility(View.GONE);
 
         final String userType = this.mUsertypeView.getText().toString().trim();
         final String email = this.mEmailView.getText().toString().trim();
         final String username = this.mUsernameView.getText().toString().trim();
         final String password = this.mPasswordView.getText().toString().trim();
-        //UUID.randomUUID()
+
         //User Object
         JSONObject js = new JSONObject();
         try {
@@ -142,13 +142,14 @@ public class RegisterActivity extends AppCompatActivity {
             js.put("username",username);
             js.put("email",email);
             js.put("password",password);
+            js.put("token", null);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         //if (!js.isNull("user_type") && !js.isNull("username") && !js.isNull("email"))
 
         //Send JSON object to controller. Use response to verify success.
-        JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, URL_REGIST + "/add/user", js,
+        JsonObjectRequest userRequest = new JsonObjectRequest(Request.Method.POST, URL + "/add/user", js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -159,16 +160,18 @@ public class RegisterActivity extends AppCompatActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class)); //Go to login
+                        Intent intent = new Intent(getBaseContext(), RegisterDefaultUserActivity.class);
+                        intent.putExtra("USER_USERNAME", username);
+                        startActivity(intent);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(RegisterActivity.this, "Register Failed!", Toast.LENGTH_SHORT).show();
-                        Log.d("ON ERROR RESPONSE", "" + error.toString());
+                        Log.d("USER ERROR RESPONSE", "" + error.toString());
                         mProgressBar.setVisibility(View.GONE);
-                        mRegisterBtn.setVisibility(View.VISIBLE);
+                        mContinueBtn.setVisibility(View.VISIBLE);
                     }
                 });
 /*        {

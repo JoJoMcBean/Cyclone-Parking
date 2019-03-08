@@ -17,9 +17,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.cyparking.parkinglog.ParkingLog;
 import com.example.cyparking.parkinglog.ParkingLogAdapter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,26 +40,39 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView.Adapter parkingLogsAdapter;
     ArrayList<ParkingLog> logs = new ArrayList<>();
 
+    userSchema userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         mProgressBar = findViewById(R.id.load_progress);
-        /*
+
+        //Token
+        JSONObject js = new JSONObject();
+        try {
+            js.put("token", LoginActivity.getToken());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         //Load User Data
         mProgressBar.setVisibility(View.VISIBLE);
-        StringRequest getUser = new StringRequest(Request.Method.POST, URL + "/user",
-                new Response.Listener<String>() {
+        JsonObjectRequest getUser = new JsonObjectRequest(Request.Method.POST, URL + "/get/default", js,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(String response) {
-                        if (response.equals("failed")) {
-                            Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-                            mProgressBar.setVisibility(View.GONE);
-                        } else {
-                            userToken = response;
-                            Log.i("USERTOKEN", userToken);
-                            startActivity(new Intent(ProfileActivity.this, DashboardActivity.class)); //Go to dashboard
+                    public void onResponse(JSONObject response) {
+                        mProgressBar.setVisibility(View.GONE);
+                        try {
+                            Log.d("THIS USER", response.toString());
+                            String username = response.getString("username");
+                            String password = response.getString("password");
+                            String userType = response.getString("user_type");
+                            String email = response.getString("email");
+                            userData = new userSchema(userType, username, password, email);
+                        } catch (JSONException e) {
+                            Log.d("LOAD ERROR RESPONSE", "" + e.toString());
                         }
                     }
                 },
@@ -63,19 +80,11 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(ProfileActivity.this, "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }){
-            @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("usertoken", LoginActivity.getToken());
-                return params;
-            }
-
-        };
+                });
         mQueue.add(getUser);
-        */
+
 
         //Recycle View => "Recent Parking History"
         recyclerView = (RecyclerView) findViewById(R.id.parking_log);
