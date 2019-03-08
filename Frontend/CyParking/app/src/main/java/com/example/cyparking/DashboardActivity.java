@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class Dashboard extends AppCompatActivity
+public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -81,8 +81,8 @@ public class Dashboard extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.nav_profile) {
+            startActivity(new Intent(DashboardActivity.this, ProfileActivity.class));
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -95,7 +95,7 @@ public class Dashboard extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             LoginActivity.setToken(" ");
-            startActivity(new Intent(Dashboard.this, LoginActivity.class)); //Go to dashboard
+            startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
         }
 
 
