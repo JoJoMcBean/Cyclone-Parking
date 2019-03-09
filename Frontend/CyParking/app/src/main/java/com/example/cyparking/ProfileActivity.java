@@ -47,8 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         mProgressBar = findViewById(R.id.load_progress);
 
-        mThisEmailView = findViewById(R.id.this_email);
-        mThisUsernameView = findViewById(R.id.this_username);
+        //mThisEmailView = findViewById(R.id.this_email);
+        //mThisUsernameView = findViewById(R.id.this_username);
 
         //Load User Data
         mProgressBar.setVisibility(View.VISIBLE);
@@ -79,8 +79,8 @@ public class ProfileActivity extends AppCompatActivity {
         };
         mQueue.add(getUser);
 
-        mThisEmailView.setText(userData.getEmail());
-        mThisUsernameView.setText(userData.getUsername());
+        //mThisEmailView.setText(userData.getEmail());
+        //mThisUsernameView.setText(userData.getUsername());
 
 
         //Recycle View => "Recent Parking History"
