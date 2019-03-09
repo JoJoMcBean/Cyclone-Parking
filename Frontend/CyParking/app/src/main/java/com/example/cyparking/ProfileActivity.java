@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.cyparking.parkinglog.ParkingLog;
 import com.example.cyparking.parkinglog.ParkingLogAdapter;
 
@@ -30,9 +31,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
 
-    private RequestQueue mQueue; //Volley Request Queue
+    private RequestQueue mQueue;
 
-    private TextView mThisNameView, mThisUsernameView, mThisEmailView;
+    private TextView mThisUsernameView, mThisEmailView;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter parkingLogsAdapter;
@@ -45,10 +46,12 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        mQueue = Volley.newRequestQueue(this);
+
         mProgressBar = findViewById(R.id.load_progress);
 
-        //mThisEmailView = findViewById(R.id.this_email);
-        //mThisUsernameView = findViewById(R.id.this_username);
+        mThisEmailView = findViewById(R.id.this_email);
+        mThisUsernameView = findViewById(R.id.this_username);
 
         //Load User Data
         mProgressBar.setVisibility(View.VISIBLE);
@@ -70,17 +73,17 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 }){
             @Override
-            protected Map<String,String> getParams() throws AuthFailureError {
+            protected Map<String,String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("token", LoginActivity.getToken());
                 return params;
             }
-
         };
         mQueue.add(getUser);
 
-        //mThisEmailView.setText(userData.getEmail());
-        //mThisUsernameView.setText(userData.getUsername());
+        mThisEmailView.setText();
+        mThisUsernameView.setText();
+
 
 
         //Recycle View => "Recent Parking History"

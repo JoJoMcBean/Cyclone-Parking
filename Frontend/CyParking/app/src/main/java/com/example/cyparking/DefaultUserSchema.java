@@ -30,4 +30,17 @@ public class DefaultUserSchema extends UserSchema {
     public void setCreditCardNum(String creditCardNum) {
         this.creditCardNum = creditCardNum;
     }
+
+    public String getUsername() {
+        return username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getUserType() {
+        return userType;
+    }
 }

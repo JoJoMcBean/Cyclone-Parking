@@ -58,7 +58,6 @@ public class RegisterDefaultUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_default_user);
 
-        mNetIdView = findViewById(R.id.net_ID);
         mLicenseNumView = findViewById(R.id.license_num);
         mCardNumView = findViewById(R.id.card_num);
         mRegisterBtn = findViewById(R.id.register_button);
