@@ -25,9 +25,11 @@ public class DefaultUsers {
     @NotFound(action = NotFoundAction.IGNORE)
     private String username;
 
-    @Column(name = "net_id")
+    /*
+    @Column(name = "netid")
     @NotFound(action = NotFoundAction.IGNORE)
-    private String net_id;
+    private String netid;
+    */
 
     @Column(name = "license")
     @NotFound(action = NotFoundAction.IGNORE)
@@ -36,7 +38,7 @@ public class DefaultUsers {
 
     @Column(name = "cardnum")
     @NotFound(action = NotFoundAction.IGNORE)
-    private String cardNum;
+    private String cardnum;
 
 
     public String getUsername() {
@@ -47,13 +49,15 @@ public class DefaultUsers {
         this.username = username;
     }
 
-    public String getNet_id() {
-        return net_id;
+    /*
+    public String getnetId() {
+        return netid;
     }
 
-    public void setNet_id(String net_id) {
-        this.net_id = net_id;
+    public void setnetId(String netid) {
+        this.netid = netid;
     }
+    */
 
     public String getLicense() {
         return license;
@@ -63,11 +67,11 @@ public class DefaultUsers {
         this.license = license;
     }
 
-    public String getCardNum() {
-        return cardNum;
+    public String getcardNum() {
+        return cardnum;
     }
 
-    public void setCardNum(String cardNum) {
-        this.cardNum = cardNum;
+    public void setcardNum(String cardNum) {
+        this.cardnum = cardNum;
     }
 }
