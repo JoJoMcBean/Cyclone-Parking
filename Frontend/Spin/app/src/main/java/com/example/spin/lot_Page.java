@@ -33,9 +33,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -49,10 +51,13 @@ public class lot_Page extends AppCompatActivity {
     GridView gridView;
     private String available_spot;
     private String unavailable_spot;
+    private String path;
     private boolean[] Spot_Status;
     static final String[] numbers = new String[]{
             "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "10"};
+    int available_color = Color.GREEN;
+    int unavailable_color = Color.RED;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class lot_Page extends AppCompatActivity {
         unavailable_spot = intent.getStringExtra("Unavailable");
         Spot_Status = new boolean[intent.getBooleanArrayExtra("Spot_Array").length];
         Spot_Status = intent.getBooleanArrayExtra("Spot_Array");
+        path = intent.getStringExtra("Path");
 
         final List<String> test = new ArrayList<String>(Arrays.asList(numbers));
 
@@ -76,16 +82,15 @@ public class lot_Page extends AppCompatActivity {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 View view = super.getView(position, convertView, parent);
-                int available_color = Color.GREEN;
-                int unavailable_color = Color.RED;
+
                 if(Spot_Status[position] == true)
                 {
-                    view.setBackgroundColor(available_color); // available -> green
+                    view.setBackgroundColor(unavailable_color); // available -> green
                 }
 
                 else
                 {
-                    view.setBackgroundColor(unavailable_color);   // unavailable ->red
+                    view.setBackgroundColor(available_color);   // unavailable ->red
                 }
 
                 return view;
@@ -107,11 +112,20 @@ public class lot_Page extends AppCompatActivity {
                 if (Spot_Status[position] == true) {
 
                     dialog_spotTaken();
-                    Request_takeSpot(position);
+                   // Request_takeSpot(position);
 
                 } else if (Spot_Status[position] == false) {
                     dialog_spotFree(position);
+                    try {
+                        Request_takeSpotJson(position);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+//                    Request_takeSpot(position);
                 }
+
+
 
 
             }
@@ -142,8 +156,10 @@ public class lot_Page extends AppCompatActivity {
                             @TargetApi(11)
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(lot_Page.this, "Spot Locked!", Toast.LENGTH_LONG).show();
-                                Request_takeSpot(num);
-                                gridView.getChildAt(num).setBackgroundColor(Color.BLACK);
+                                //Request_takeSpot(num);
+
+
+                                gridView.getChildAt(num).setBackgroundColor(Color.RED);
                                 dialog.cancel();
                             }
                         })
@@ -158,9 +174,36 @@ public class lot_Page extends AppCompatActivity {
     }
 
 
+
+    public void Request_takeSpotJson(final int num) throws JSONException {
+        JSONObject data = new JSONObject();
+        data.put("spotNum",num+1);
+        data.put("isFilled",true);
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url+path, data, new Response.Listener<JSONObject>() {
+           @Override
+           public void onResponse(JSONObject response) {
+              Log.d("rua",response.toString());
+
+           }
+       }, new Response.ErrorListener() {
+           @Override
+           public void onErrorResponse(VolleyError error) {
+               error.printStackTrace();
+
+           }
+       });
+
+       requestQueue.add(jsonObjectRequest);
+    }
+
+
+
     public void Request_takeSpot(final int num) {
 
         String path = "";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -178,15 +221,20 @@ public class lot_Page extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parms = new HashMap<String, String>();
-                String number = Integer.toString(num);
+                String number = Integer.toString(num+1);
                 String result = "true";
-                parms.put("spotNum", number);
-                parms.put("isFilled", result);
+                String sent = number + "," + result;
+                parms.put("spotNumFilled",sent);
+
 
 
                 return super.getParams();
             }
         };
+
+        requestQueue.add(stringRequest);
+
+
 
 
     }
