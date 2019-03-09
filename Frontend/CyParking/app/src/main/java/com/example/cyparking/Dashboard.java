@@ -1,5 +1,6 @@
 package com.example.cyparking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -92,7 +93,11 @@ public class Dashboard extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.nav_logout) {
+            LoginActivity.setToken(" ");
+            startActivity(new Intent(Dashboard.this, LoginActivity.class)); //Go to dashboard
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -53,6 +53,8 @@ import java.util.Map;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import java.util.UUID;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.android.volley.NetworkResponse;
@@ -132,7 +134,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = this.mEmailView.getText().toString().trim();
         final String username = this.mUsernameView.getText().toString().trim();
         final String password = this.mPasswordView.getText().toString().trim();
-
+        //UUID.randomUUID()
         //User Object
         JSONObject js = new JSONObject();
         try {
@@ -163,7 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(RegisterActivity.this, "Register Failed! Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Register Failed!", Toast.LENGTH_SHORT).show();
                         Log.d("ON ERROR RESPONSE", "" + error.toString());
                         mProgressBar.setVisibility(View.GONE);
                         mRegisterBtn.setVisibility(View.VISIBLE);
