@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
 
-    private ArrayList<userSchema> mEntries = new ArrayList<>(); //users list
+    private ArrayList<UserSchema> mEntries = new ArrayList<>(); //users list
     private ArrayList<String> errors = new ArrayList<>(); //errors list
     private RequestQueue mQueue; //Volley Request Queue
 

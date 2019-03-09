@@ -1,11 +1,11 @@
 package com.example.cyparking;
 
-public class userSchema {
+public class UserSchema {
     private String username;
     private String password;
     private String userType;
     private String email;
-    public userSchema(String username, String password, String userType, String email) {
+    public UserSchema(String username, String password, String userType, String email) {
         this.username = username;
         this.password = password;
         this.userType = userType;

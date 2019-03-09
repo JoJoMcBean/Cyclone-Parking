@@ -12,53 +12,38 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView7"
-        style="@android:style/Widget.Material.Light.TextView"
-        android:layout_width="140dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
-        android:gravity="right"
-        android:text="name"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/this_username"
         style="@android:style/Widget.Material.Light.TextView"
         android:layout_width="109dp"
         android:layout_height="22dp"
-        android:layout_marginTop="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:gravity="right"
         android:text="username"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView7" />
+        tools:layout_editor_absoluteY="35dp" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/this_email"
         style="@android:style/Widget.Material.Light.TextView"
         android:layout_width="141dp"
         android:layout_height="21dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:gravity="right"
         android:text="email"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="@+id/this_username" />
 
     <TextView
         android:id="@+id/textView4"
@@ -67,8 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="48dp"
-        android:text="Email"
+        android:layout_marginTop="28dp"
+        android:text="Email:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
 
@@ -91,22 +76,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="48dp"
         android:text="Username:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textView2"
-        style="@android:style/TextAppearance.Material.Subhead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginTop="48dp"
-        android:text="Name:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="36dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/parking_log"
