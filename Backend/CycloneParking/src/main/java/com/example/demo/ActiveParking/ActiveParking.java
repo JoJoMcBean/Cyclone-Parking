@@ -25,31 +25,13 @@ public class ActiveParking {
     @NotFound(action = NotFoundAction.IGNORE)
     private String username;
 
-    @Column(name = "license")
+    @Column(name = "time")
     @NotFound(action = NotFoundAction.IGNORE)
-    private String license;
+    private timestamp time;
 
-
-    @Column(name = "stminute")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private String cardNum;
-
-    @Column(name = "sthour")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private String cardNum;
-
-    @Column(name = "stday")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private String cardNum;
-
-    @Column(name = "stmonth")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private String cardNum;
-
-    @Column(name = "styear")
-    @NotFound(action = NotFoundAction.IGNORE)
-    private String cardNum;
-
+    public boolean isParked(String username){
+        return this.username == null;
+    }
 
     public String getUsername() {
         return username;
@@ -59,27 +41,12 @@ public class ActiveParking {
         this.username = username;
     }
 
-    public String getNet_id() {
-        return net_id;
+    public timestamp getTime(){
+        return time;
     }
 
-    public void setNet_id(String net_id) {
-        this.net_id = net_id;
+    public void setTime(timestamp time){
+        this.time = time;
     }
 
-    public String getLicense() {
-        return license;
-    }
-
-    public void setLicense(String license) {
-        this.license = license;
-    }
-
-    public String getCardNum() {
-        return cardNum;
-    }
-
-    public void setCardNum(String cardNum) {
-        this.cardNum = cardNum;
-    }
 }
