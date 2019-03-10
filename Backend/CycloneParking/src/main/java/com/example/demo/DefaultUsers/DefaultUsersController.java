@@ -35,9 +35,15 @@ public class DefaultUsersController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/get/default")
-    public String getUserOnToken(@RequestBody String token){
+    @RequestMapping(method = RequestMethod.POST, value = "/get/default")
+    public String getUserInfoOnToken(String token){
+
         logger.info(token);
+
+        if(token == null){
+            return "null token";
+        }
+        /*
         Scanner s = new Scanner(token);
         String parsedToken = "";
         while(s.hasNext()){
@@ -47,10 +53,36 @@ public class DefaultUsersController {
         }
         String finalParse = parsedToken.substring(1, parsedToken.length() - 1);
         logger.info(finalParse);
-        String userInfo = defaultUsersRepository.getUserWithToken(finalParse);
-        s.close();
+        */
+        String userInfo = defaultUsersRepository.getUserInfoWithToken(token);
         return userInfo;
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/update/default")
+    public DefaultUsers update(@Valid @RequestBody DefaultUsers updateUser){
+        if(defaultUsersRepository.existsById(updateUser.getUsername())) {
+            return defaultUsersRepository.save(updateUser);
+        }
+        else return null;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/update/userinfo")
+    public String updateInfo(String userInfo){
+        String[] infoArray = userInfo.split(",");
+        String password = infoArray[0];
+        String email = infoArray[1];
+        String license = infoArray[2];
+        String cardNum = infoArray[3];
+        String token = infoArray[4];
+
+        String username = defaultUsersRepository.getUsernameFromToken(token);
+        defaultUsersRepository.updateUserLoginInfo(password, email, token);
+        defaultUsersRepository.updateDefaultUsersInfo(license, cardNum, username);
+
+        return "Success";
+
+    }
+
 
 
 
