@@ -11,8 +11,8 @@ public interface ActiveParkingRepository extends JpaRepository<ActiveParking, St
 
 
 
-    @Query(value = "SELECT username FROM active_parking", nativeQuery = true)
-    List<String> getAll();
+    @Query(value = "SELECT * FROM active_parking", nativeQuery = true)
+    List<ActiveParking> getAll();
 
 
 

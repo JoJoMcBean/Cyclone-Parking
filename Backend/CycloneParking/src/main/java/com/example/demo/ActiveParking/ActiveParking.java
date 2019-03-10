@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.sun.javafx.beans.IDProperty;
 import org.hibernate.annotations.NotFound;
@@ -27,7 +30,7 @@ public class ActiveParking {
 
     @Column(name = "time")
     @NotFound(action = NotFoundAction.IGNORE)
-    private timestamp time;
+    private Timestamp time;
 
     public boolean isParked(String username){
         return this.username == null;
@@ -41,11 +44,11 @@ public class ActiveParking {
         this.username = username;
     }
 
-    public timestamp getTime(){
+    public Timestamp getTime(){
         return time;
     }
 
-    public void setTime(timestamp time){
+    public void setTime(Timestamp time){
         this.time = time;
     }
 
