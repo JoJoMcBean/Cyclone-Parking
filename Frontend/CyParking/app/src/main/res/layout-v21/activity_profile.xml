@@ -7,6 +7,60 @@
     android:layout_height="match_parent">
 
     <!-- Login progress -->
+    <TextView
+        android:id="@+id/credit_num"
+        style="@android:style/TextAppearance.Material.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="16dp"
+        android:text="Credit Card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/license_num" />
+
+    <TextView
+        android:id="@+id/this_credit_num"
+        style="@android:style/Widget.Material.Light.TextView"
+        android:layout_width="141dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:gravity="right"
+        android:text="card"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/this_license_num" />
+
+    <TextView
+        android:id="@+id/license_num"
+        style="@android:style/TextAppearance.Material.Subhead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="64dp"
+        android:text="License No."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/this_license_num"
+        style="@android:style/Widget.Material.Light.TextView"
+        android:layout_width="141dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
+        android:gravity="right"
+        android:text="license"
+        android:textSize="16sp"
+        android:onClick="onClick"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/this_email" />
+
     <ProgressBar
         android:id="@+id/load_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -37,12 +91,14 @@
         style="@android:style/Widget.Material.Light.TextView"
         android:layout_width="141dp"
         android:layout_height="21dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="48dp"
         android:layout_marginRight="48dp"
         android:gravity="right"
         android:text="email"
         android:textSize="16sp"
+        android:onClick="onClick"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/this_username" />
 
@@ -53,7 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:text="Email:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
@@ -61,14 +117,14 @@
     <TextView
         android:id="@+id/textView8"
         style="@android:style/TextAppearance.Material.Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_width="248dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="24dp"
         android:text="Recent Parking History:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/apply_changes_btn" />
 
     <TextView
         android:id="@+id/textView3"
@@ -86,7 +142,7 @@
         android:id="@+id/parking_log"
         android:layout_width="400dp"
         android:layout_height="194dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,4 +152,16 @@
         tools:itemCount="3"
         tools:listitem="@layout/item_parking_log" />
 
-    </android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/apply_changes_btn"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Apply Changes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/this_credit_num" />
+
+</android.support.constraint.ConstraintLayout>

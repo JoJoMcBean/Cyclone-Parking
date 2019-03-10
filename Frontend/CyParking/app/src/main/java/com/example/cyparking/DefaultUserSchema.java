@@ -1,46 +1,55 @@
 package com.example.cyparking;
 
-public class DefaultUserSchema extends UserSchema {
-    private String username;
-    private String password;
-    private String userType;
-    private String email;
+public class DefaultUserSchema {
 
-    private String licenseNum;
-    private String creditCardNum;
+        private String username;
+        private String password;
+        private String userType;
+        private String email;
 
-    public DefaultUserSchema(String username, String password, String userType, String email, String licenseNum, String creditCardNum) {
-        super(username, password, userType, email);
-        this.licenseNum = licenseNum;
-        this.creditCardNum = creditCardNum;
-    }
+        private String licenseNum;
+        private String creditCardNum;
 
-    public String getLicenseNum() {
-        return licenseNum;
-    }
+        public DefaultUserSchema(String username, String password, String userType, String email, String licenseNum, String creditCardNum) {
+            this.username = username;
+            this.password = password;
+            this.userType = userType;
+            this.email = email;
+            this.licenseNum = licenseNum;
+            this.creditCardNum = creditCardNum;
+        }
 
-    public void setLicenseNum(String licenseNum) {
-        this.licenseNum = licenseNum;
-    }
+        public String getLicenseNum() {
+            return licenseNum;
+        }
 
-    public String getCreditCardNum() {
-        return creditCardNum;
-    }
+        public void setLicenseNum(String licenseNum) {
+            this.licenseNum = licenseNum;
+        }
 
-    public void setCreditCardNum(String creditCardNum) {
-        this.creditCardNum = creditCardNum;
-    }
+        public String getCreditCardNum() {
+            return creditCardNum;
+        }
 
-    public String getUsername() {
-        return username;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public String getUserType() {
-        return userType;
-    }
+        public void setCreditCardNum(String creditCardNum) {
+            this.creditCardNum = creditCardNum;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+        public String getPassword() {
+            return password;
+        }
+        public String getEmail() {
+            return email;
+        }
+        public void setEmail(String email) {
+            this.email = email;
+        }
+        public String getUserType() {
+            return userType;
+        }
+
+
 }
