@@ -46,7 +46,6 @@ import lecho.lib.hellocharts.view.PieChartView;
 import static com.github.mikephil.charting.utils.ColorTemplate.JOYFUL_COLORS;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    private String URL = "https://api.myjson.com/bins/1b5d2a";
     Spinner spinner;
     TextView  result, avaiablity;
     Button parse, nextpage ;
@@ -58,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     PieChartView pieChartView ;
     List<SliceValue> pieData ;
     RequestQueue requestQueue;
+    String path;
+    String url;
 
 
     @Override
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         avaiablity = (TextView) findViewById(R.id.availibty);
         avaiablity.setAlpha(0.0f);
         nextpage = (Button) findViewById(R.id.button2);
+        url = "http://cs309-yt-2.misc.iastate.edu:8080/";
+
+
         nextpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 newpage.putExtra("Available",ava);
                 newpage.putExtra("Unavailable",unava);
                 newpage.putExtra("Spot_Array",spots_status);
+                newpage.putExtra("Path",path);
+
 
                // Toast.makeText(getApplicationContext(), Integer.toString(available_spot), Toast.LENGTH_SHORT).show();
                 startActivity(newpage);
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             }
         });
+
 
 
 
@@ -114,12 +121,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
-        //assume spot 20 of lot1 is parked, send that request to server
 
         spinner = (Spinner) findViewById(R.id.spin_hommie);
-     ArrayAdapter adapter =  ArrayAdapter.createFromResource(this, R.array.lot, android.R.layout.simple_spinner_item);
-       spinner.setAdapter(adapter);
-      spinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.lot, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
 
     }
 
@@ -128,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //String text = parent.getItemAtPosition(position).toString();
 
-
-        Toast.makeText(this, "Available Spots: " + available_spot,Toast.LENGTH_LONG).show();
+        path = parent.getItemAtPosition(position).toString();
+        Toast.makeText(this, parent.getItemAtPosition(position).toString(),Toast.LENGTH_LONG).show();
 
 
 
@@ -144,9 +152,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void JsonArrayParse(){
 
 
-        String url  = "http://cs309-yt-2.misc.iastate.edu:8080/lot0";
-        String url_lot2 = "https://api.myjson.com/bins/axzrm";
-        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+
+        JsonArrayRequest request = new JsonArrayRequest(url + path, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 try {
