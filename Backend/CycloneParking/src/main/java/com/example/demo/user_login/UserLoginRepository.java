@@ -11,7 +11,7 @@ public interface UserLoginRepository extends JpaRepository<UserLogin, String> {
 
 
 
-    @Query(value = "SELECT username FROM UserLogin", nativeQuery = true)
+    @Query(value = "SELECT username FROM user_login", nativeQuery = true)
     List<String> getUsernames();
 
 

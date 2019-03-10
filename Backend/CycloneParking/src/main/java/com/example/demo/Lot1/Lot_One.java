@@ -13,6 +13,7 @@ public class Lot_One {
 
     @Id
     @GeneratedValue
+    @Column(name = "spotnum")
     @NotFound(action = NotFoundAction.IGNORE)
     private Integer spotnum;
 

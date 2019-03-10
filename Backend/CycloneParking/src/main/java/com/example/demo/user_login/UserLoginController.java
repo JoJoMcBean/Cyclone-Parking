@@ -63,8 +63,6 @@ class UserLoginController {
     }
     @RequestMapping(method = RequestMethod.GET, path = "/users/{username}")
     public UserLogin findUserByUsername(@PathVariable("username") String username) {
-        //logger.info("Entered into Controller Layer");
-        //Optional<UserLogin> results = user_loginRepository.findById(username);
         return user_loginRepository.getUser(username);
     }
     @RequestMapping(method = RequestMethod.GET, path = "/usernames")
