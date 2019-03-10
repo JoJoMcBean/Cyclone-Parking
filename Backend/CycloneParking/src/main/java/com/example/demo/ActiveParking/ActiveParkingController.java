@@ -39,21 +39,31 @@ public class ActiveParkingController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/get")
-    public ActiveParking getStart(@Valid @RequestBody ActiveParking time){
-        if(activeParkingRepository.existsById(time.getUsername()))
+    public ActiveParking getStart(@Valid @RequestBody ActiveParking time) {
+        if (activeParkingRepository.existsById(time.getUsername()))
             return activeParkingRepository.findByUsername(user.getUsername);
         else
             return null;
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public String delete(String user){
-        if(activeParkingRepository.existsById(user))
+    public String delete(String user) {
+        if (activeParkingRepository.existsById(user)){
             ActiveParking time = activeParkingRepository.findByUsername(user);
-            activeParkingRepository.delete(user);
-            return "Pass";
+        activeParkingRepository.delete(user);
+        return "Pass";
+    }
         else
             return "Fail";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public String search(String user){
+        if(activeParkingRepository.existsById(user))
+            return "found";
+        else
+            return "not found";
+
     }
 
 
