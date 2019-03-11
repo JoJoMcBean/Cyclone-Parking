@@ -1,36 +1,15 @@
 package com.example.cyparking;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
 
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
-
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,33 +17,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import org.json.JSONException;
-import org.json.JSONObject;
-import com.android.volley.NetworkResponse;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.HttpHeaderParser;
-
-import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
@@ -76,6 +34,13 @@ public class LoginActivity extends AppCompatActivity {
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
+    private static String userToken = "";
+    public static String getToken() {
+        return userToken;
+    }
+    public static void setToken(String newToken) {
+        userToken = newToken;
+    }
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -96,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private View mProgressView;
     private View mLoginFormView;
 
-    private ArrayList<userSchema> mEntries = new ArrayList<>(); //users list
+    private ArrayList<UserSchema> mEntries = new ArrayList<>(); //users list
     private ArrayList<String> errors = new ArrayList<>(); //errors list
     private RequestQueue mQueue; //Volley Request Queue
 
@@ -115,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Login();
             }
         });
@@ -133,34 +98,34 @@ public class LoginActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
         mLoginBtn.setVisibility(View.GONE);
 
-        final String email = this.mEmailView.getText().toString().trim();
+        final String username = this.mEmailView.getText().toString().trim();
         final String password = this.mPasswordView.getText().toString().trim();
 
+        /*
+        //User Object
+        JSONObject js = new JSONObject();
+        try {
+            js.put("username",username);
+            js.put("password",password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        */
+
+        final String verify = username + "," + password;
         //Get ALL users and put into "mEntries"
-        JsonArrayRequest usersRequest = new JsonArrayRequest(URL + "/users",
-                new Response.Listener<JSONArray>() {
+        StringRequest verifyUserInfo = new StringRequest(Request.Method.POST, URL + "/authentication",
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject user = response.getJSONObject(i);
-                                String username = user.getString("username");
-                                String password = user.getString("password");
-                                String userType = user.getString("user_type");
-                                String email = user.getString("email");
-                                userSchema userData = new userSchema(username, password, userType, email);
-                                mEntries.add(userData);
-                            } catch (JSONException e) {
-                                errors.add("Error: " + e.getLocalizedMessage());
-                            }
-                        }
-                        Log.d("Num Users", "There are " + mEntries.size() + " users on this database.");
-                        if (loginVerify(mEntries, email, password)) {
-                            startActivity(new Intent(LoginActivity.this, Dashboard.class)); //Go to dashboard
-                        } else {
+                    public void onResponse(String response) {
+                        if (response.equals("failed")) {
                             Toast.makeText(LoginActivity.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
                             mProgressBar.setVisibility(View.GONE);
                             mLoginBtn.setVisibility(View.VISIBLE);
+                        } else {
+                            userToken = response;
+                            Log.i("USERTOKEN", userToken);
+                            startActivity(new Intent(LoginActivity.this, DashboardActivity.class)); //Go to dashboard
                         }
                     }
                 },
@@ -170,18 +135,16 @@ public class LoginActivity extends AppCompatActivity {
                         error.printStackTrace();
                         Toast.makeText(LoginActivity.this, "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
-        mQueue.add(usersRequest);
-    }
+            }){
+                @Override
+                protected Map<String,String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("userpass", verify);
+                    return params;
+                }
 
-    //Temporary Login Verification
-    public boolean loginVerify(ArrayList<userSchema> users, String email, String password) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getEmail().equals(email) && users.get(i).getPassword().equals(password)) {
-                return true;
-            }
-        }
-        return false;
+            };
+        mQueue.add(verifyUserInfo);
     }
 }
 

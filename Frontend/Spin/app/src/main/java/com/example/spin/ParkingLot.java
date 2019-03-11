@@ -21,8 +21,15 @@ public class ParkingLot {
 
 
     }
+    public int getSpots_quantity()
+    {
+        return spots_quantity;
+    }
 
-
+    public spot[] getSpot_array()
+    {
+        return spot_array;
+    }
     public void test_spotTaken(int num)
     {
 
