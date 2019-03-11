@@ -18,7 +18,7 @@ import org.springframework.core.style.ToStringCreator;
 
 @Entity
 @Table(name = "user_login")
-public class user_login {
+public class UserLogin {
 
     @Id
     @Column(name = "username")
@@ -33,11 +33,18 @@ public class user_login {
     @NotFound(action = NotFoundAction.IGNORE)
     private String user_type;
 
-    
 
     @Column(name = "email")
     @NotFound(action = NotFoundAction.IGNORE)
     private String email;
+
+    @Column(name = "token")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private String token;
+
+    public String getToken(){return token;}
+
+    public void setToken(String token){this.token = token;}
 
     public String getUsername() {
         return username;

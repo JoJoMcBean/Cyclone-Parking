@@ -2,29 +2,32 @@ package com.example.demo.user_login;
 
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
+import java.util.UUID;
+
 
 @RestController
 @EnableWebMvc
-class user_loginController {
+class UserLoginController {
 
     @Autowired
-    user_loginRepository user_loginRepository;
+    UserLoginRepository user_loginRepository;
     userService userService;
 
-    private final Logger logger = LoggerFactory.getLogger(user_loginController.class);
+    private final Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/add/user")
-    public user_login createUser(@Valid @RequestBody user_login user) {
+    public UserLogin createUser(@Valid @RequestBody UserLogin user) {
 
             if(!user_loginRepository.existsById(user.getUsername()) && user.getUsername() != "" && user.getPassword() != "" && user.getUser_type() != "" && user.getEmail() != "") {
                return user_loginRepository.save(user);
@@ -34,7 +37,7 @@ class user_loginController {
         }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update")
-    public user_login update(@Valid @RequestBody user_login updateUser){
+    public UserLogin update(@Valid @RequestBody UserLogin updateUser){
         if(user_loginRepository.existsById(updateUser.getUsername())) {
             return user_loginRepository.save(updateUser);
         }
@@ -42,7 +45,7 @@ class user_loginController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public user_login deleteUser(@Valid @RequestBody user_login deleteUser){
+    public UserLogin deleteUser(@Valid @RequestBody UserLogin deleteUser){
         if(user_loginRepository.existsById(deleteUser.getUsername())) {
             user_loginRepository.delete(deleteUser);
             return deleteUser;
@@ -52,23 +55,41 @@ class user_loginController {
 
 
     @RequestMapping(method = RequestMethod.GET, path = "/users")
-    public List<user_login> getAllUsers() {
+    public List<UserLogin> getAllUsers() {
         logger.info("Entered into Controller Layer");
-        List<user_login> results = user_loginRepository.findAll();
+        List<UserLogin> results = user_loginRepository.findAll();
         logger.info("Number of Records Fetched:" + results.size());
         return results;
     }
     @RequestMapping(method = RequestMethod.GET, path = "/users/{username}")
-    public Optional<user_login> findUserByUsername(@PathVariable("username") String username) {
-        logger.info("Entered into Controller Layer");
-        Optional<user_login> results = user_loginRepository.findById(username);
-        return results;
+    public UserLogin findUserByUsername(@PathVariable("username") String username) {
+        return user_loginRepository.getUser(username);
     }
     @RequestMapping(method = RequestMethod.GET, path = "/usernames")
     public List<String> getUsernames(){
         List<String> results = user_loginRepository.getUsernames();
         return results;
     }
-    
+
+    @RequestMapping(method = RequestMethod.POST, path = "/authentication")
+    public String login(String userpass) {
+        String[] login = userpass.split(",");
+
+        String username = login[0];
+        String password = login[1];
+        logger.info(login[0]);
+        logger.info(login[1]);
+        UserLogin userCheck = user_loginRepository.getUser(username);
+        String token = null;
+        if(userCheck.getPassword().equals(password) && user_loginRepository.existsById(username)){
+            token = String.valueOf(UUID.randomUUID());
+            user_loginRepository.addToken(token, username);
+            return token;
+        }
+        else{
+            return "failed";
+        }
+
+    }
 
 }
