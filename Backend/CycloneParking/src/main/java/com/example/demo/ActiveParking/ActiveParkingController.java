@@ -25,19 +25,21 @@ public class ActiveParkingController {
 
     private final Logger logger = LoggerFactory.getLogger(ActiveParkingController.class);
 
-    @RequestMapping(method = RequestMethod.POST, value = "/activeadd/time")
+    @RequestMapping(method = RequestMethod.POST, value = "/activeadd")
     public ActiveParking start(@Valid @RequestBody ActiveParking time){
-        if(!activeParkingRepository.existsById(time.getUsername()))
+        if(!activeParkingRepository.existsById(time.getUsername())) {
+            time.setTime(new Timestamp(System.currentTimeMillis()));
             return activeParkingRepository.save(time);
-        else
+        }else
             return null;
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/activeset")
     public ActiveParking setStart(@Valid @RequestBody ActiveParking time){
-        if(activeParkingRepository.existsById(time.getUsername()))
+        if(activeParkingRepository.existsById(time.getUsername())) {
+            time.setTime(new Timestamp(System.currentTimeMillis()));
             return activeParkingRepository.save(time);
-        else
+        }else
             return null;
     }
 
@@ -72,6 +74,11 @@ public class ActiveParkingController {
     @RequestMapping(method = RequestMethod.GET, value = "/activegetall")
     public List<ActiveParking> getAll(){
         return activeParkingRepository.getAll();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/time")
+    public long currentTime() {
+        return System.currentTimeMillis();
     }
 
 
