@@ -36,7 +36,7 @@ class UserLoginController {
 
         }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
     public UserLogin update(@Valid @RequestBody UserLogin updateUser){
         if(user_loginRepository.existsById(updateUser.getUsername())) {
             return user_loginRepository.save(updateUser);
