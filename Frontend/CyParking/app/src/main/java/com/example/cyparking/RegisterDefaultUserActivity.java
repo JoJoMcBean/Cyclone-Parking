@@ -46,7 +46,7 @@ public class RegisterDefaultUserActivity extends AppCompatActivity {
 
     // UI references.
     private AutoCompleteTextView mEmailView;
-    private EditText mNetIdView, mLicenseNumView, mCardNumView;
+    private EditText mLicenseNumView, mCardNumView;
     private Button mRegisterBtn, mLoginBtn;
     private ProgressBar mProgressBar;
     private static String URL = "http://cs309-yt-2.misc.iastate.edu:8080";
@@ -77,7 +77,6 @@ public class RegisterDefaultUserActivity extends AppCompatActivity {
         mRegisterBtn.setVisibility(View.GONE);
 
         final String username = getIntent().getStringExtra("USER_USERNAME");
-        final String netId = this.mNetIdView.getText().toString().trim();
         final String licenseNum = this.mLicenseNumView.getText().toString().trim();
         final String cardNum = this.mCardNumView.getText().toString().trim();
 
@@ -85,7 +84,6 @@ public class RegisterDefaultUserActivity extends AppCompatActivity {
         JSONObject js = new JSONObject();
         try {
             js.put("username",username);
-            js.put("net_id",netId);
             js.put("license",licenseNum);
             js.put("cardNum",cardNum);
         } catch (JSONException e) {
