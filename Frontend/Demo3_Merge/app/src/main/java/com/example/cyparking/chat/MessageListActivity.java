@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.cyparking.DefaultUserSchema;
@@ -32,7 +33,8 @@ public class MessageListActivity extends AppCompatActivity {
     private MessageListAdapter mMessageAdapter;
     private ArrayList<Message> messageList = new ArrayList<>();
 
-    public static ChatUser thisUser;
+    public static ChatUser thisUser = new ChatUser("poop");
+    public static ChatUser testUser = new ChatUser("guy");
 
     private OkHttpClient client;
     private static String WEBSOCKET_BASE_URL = "ws://echo.websocket.org";
@@ -43,12 +45,18 @@ public class MessageListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
-        messageList.add(new Message(thisUser, "hii", 3434));
-
-        thisUser = new ChatUser("poop");
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-        mMessageAdapter = new MessageListAdapter(this, messageList);
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mMessageRecycler.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mMessageRecycler.setLayoutManager(linearLayoutManager);
+
+
+        messageList.add(new Message(thisUser, "hii", 1434));
+        messageList.add(new Message(testUser, "hei", 3214));
+        messageList.add(new Message(thisUser, "hii", 3433));
+        mMessageAdapter = new MessageListAdapter(messageList);
+        mMessageRecycler.setAdapter(mMessageAdapter);
 
 
         client = new OkHttpClient();

@@ -21,6 +21,8 @@ public class Message {
         return message;
     }
 
-    public long getCreatedAt() {return createdAt;}
+    public long getCreatedAt() {
+        return createdAt;
+    }
 }
 
