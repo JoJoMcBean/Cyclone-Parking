@@ -24,10 +24,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.cyparking.parkinglog.ParkingLog;
 import com.example.cyparking.parkinglog.ParkingLogAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -158,21 +164,55 @@ public class ProfileActivity extends AppCompatActivity {
         };
         mQueue.add(getUser);
 
-
-
-        //Recycle View => "Recent Parking History"
-        recyclerView = (RecyclerView) findViewById(R.id.parking_log);
-
-        //Dummy filler
-        logs.add(new ParkingLog("Spot 4E", "Hilton Coliseum"));
-        logs.add(new ParkingLog("Spot 4E", "Hilton Coliseum"));
-        logs.add(new ParkingLog("Spot 4E", "Hilton Coliseum"));
-        logs.add(new ParkingLog("Spot 4E", "Hilton Coliseum"));
-        logs.add(new ParkingLog("Spot 4E", "Hilton Coliseum"));
-
-        parkingLogsAdapter = new ParkingLogAdapter(logs);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(parkingLogsAdapter);
+        //Load User Logs
+        JSONArray jsArr = new JSONArray();
+        JSONObject js = new JSONObject();
+        try {
+            js.put("token",LoginActivity.getToken());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        jsArr.put(js);
+        mProgressBar.setVisibility(View.VISIBLE);
+        JsonArrayRequest getLogs = new JsonArrayRequest(Request.Method.POST, URL + "/history", jsArr,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Process the JSON
+                        try{
+                            // Loop through the array elements
+                            Log.d("responser", response + " poopy");
+                            for(int i=0;i<response.length();i++){
+                                // Get current json object
+                                JSONObject jsLog = response.getJSONObject(i);
+                                // Get the current student (json object) data
+                                String spaceID = jsLog.getString("spotnum");
+                                String username = jsLog.getString("username");
+                                String lotID = jsLog.getString("lotid");
+                                String timeStart = jsLog.getString("timestart");
+                                String timeEnd = jsLog.getString("timeend");
+                                String paid = jsLog.getString("paid");
+                                ParkingLog log = new ParkingLog(spaceID, lotID, username, timeStart, timeEnd, paid);
+                                logs.add(log);
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                        //Recycle View => "Recent Parking History"
+                        recyclerView = (RecyclerView) findViewById(R.id.parking_log);
+                        parkingLogsAdapter = new ParkingLogAdapter(logs);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(com.example.cyparking.ProfileActivity.this));
+                        recyclerView.setAdapter(parkingLogsAdapter);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(getBaseContext(), "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+        mQueue.add(getLogs);
     }
 
     //Edit TextViews Dialog

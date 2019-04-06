@@ -29,6 +29,9 @@ import com.example.cyparking.chat.Socket.OnEventListener;
 import com.example.cyparking.parkinglog.ParkingLog;
 
 public class MessageListActivity extends AppCompatActivity {
+    private static String URL = "ws://cs309-yt-2.misc.iastate.edu:8080";
+    private static String WEBSOCKET_URL = URL + "/websocket/chat";
+
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
     private ArrayList<Message> messageList = new ArrayList<>();
@@ -37,7 +40,6 @@ public class MessageListActivity extends AppCompatActivity {
     public static ChatUser testUser = new ChatUser("guy");
 
     private OkHttpClient client;
-    private static String WEBSOCKET_BASE_URL = "ws://echo.websocket.org";
     private Listener socketOpenListener;
 
     @Override
@@ -51,13 +53,11 @@ public class MessageListActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mMessageRecycler.setLayoutManager(linearLayoutManager);
 
-
         messageList.add(new Message(thisUser, "hii", 1434));
         messageList.add(new Message(testUser, "hei", 3214));
         messageList.add(new Message(thisUser, "hii", 3433));
         mMessageAdapter = new MessageListAdapter(messageList);
         mMessageRecycler.setAdapter(mMessageAdapter);
-
 
         client = new OkHttpClient();
         socketOpenListener = new Listener();
@@ -76,7 +76,7 @@ public class MessageListActivity extends AppCompatActivity {
     }
 
     private void start() {
-        Socket webSocket = Socket.Builder.with(WEBSOCKET_BASE_URL).build();
+        Socket webSocket = Socket.Builder.with(WEBSOCKET_URL).build();
         webSocket.connect();
         webSocket.onEvent(Socket.EVENT_OPEN, socketOpenListener);
         //webSocket.onEvent(Socket.EVENT_RECONNECT_ATTEMPT, .....);

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.cyparking.R;
+import com.github.mikephil.charting.utils.Utils;
 
 import java.util.List;
 
@@ -23,15 +24,23 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public static class MessageListViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout leftMsgLayout;
         ConstraintLayout rightMsgLayout;
+        TextView leftMsgName;
+        TextView leftMsgTime;
         TextView leftMsgTextView;
+        TextView rightMsgTime;
         TextView rightMsgTextView;
+
 
         public MessageListViewHolder(View v) {
             super(v);
             leftMsgLayout = (ConstraintLayout) itemView.findViewById(R.id.chat_left_msg_layout);
             rightMsgLayout = (ConstraintLayout) itemView.findViewById(R.id.chat_right_msg_layout);
+            leftMsgName = (TextView) itemView.findViewById(R.id.receiver_message_name);
+            leftMsgTime = (TextView) itemView.findViewById(R.id.receiver_message_time);
             leftMsgTextView = (TextView) itemView.findViewById(R.id.receiver_message_body);
+            rightMsgTime = (TextView) itemView.findViewById(R.id.sender_message_time);
             rightMsgTextView = (TextView) itemView.findViewById(R.id.sender_message_body);
+
         }
     }
 
@@ -48,11 +57,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     @Override
     public void onBindViewHolder(MessageListViewHolder holder, int position) {
         Message message = (Message) mMessageList.get(position);
-        //Log.i("LOOOK AT ME ", mMessageList.get(position) + "");
 
-        if (message.getSender().username.equals(MessageListActivity.getCurrentUser().username)) {
+        if (!message.getSender().username.equals(MessageListActivity.getCurrentUser().username)) {
             // Show received message in left linearlayout.
             holder.leftMsgLayout.setVisibility(ConstraintLayout.VISIBLE);
+            holder.leftMsgTime.setText(DateUtils.formatDateTime(message.getCreatedAt()));
+            holder.leftMsgName.setText(message.getSender().getUsername());
             holder.leftMsgTextView.setText(message.getMessage());
             // Remove left linearlayout.The value should be GONE, can not be INVISIBLE
             // Otherwise each iteview's distance is too big.
@@ -62,9 +72,9 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         else {
             // Show sent message in right linearlayout.
             holder.rightMsgLayout.setVisibility(ConstraintLayout.VISIBLE);
+            holder.rightMsgTime.setText(DateUtils.formatDateTime(message.getCreatedAt()));
             holder.rightMsgTextView.setText(message.getMessage());
             // Remove left linearlayout.The value should be GONE, can not be INVISIBLE
-            // Otherwise each iteview's distance is too big.
             holder.leftMsgLayout.setVisibility(ConstraintLayout.GONE);
         }
     }
