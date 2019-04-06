@@ -43,17 +43,6 @@ public class DefaultUsersController {
         if(token == null){
             return "null token";
         }
-        /*
-        Scanner s = new Scanner(token);
-        String parsedToken = "";
-        while(s.hasNext()){
-            if(s.next().contains(":")){
-                parsedToken = s.next();
-            }
-        }
-        String finalParse = parsedToken.substring(1, parsedToken.length() - 1);
-        logger.info(finalParse);
-        */
         String userInfo = defaultUsersRepository.getUserInfoWithToken(token);
         return userInfo;
     }
