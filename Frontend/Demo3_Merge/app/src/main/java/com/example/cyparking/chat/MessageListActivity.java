@@ -5,11 +5,13 @@
 package com.example.cyparking.chat;
 
 import android.os.Looper;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,6 +115,8 @@ public class MessageListActivity extends AppCompatActivity {
         mMessageRecycler.setLayoutManager(linearLayoutManager);
         mMessageAdapter = new MessageListAdapter(messageList);
         mMessageRecycler.setAdapter(mMessageAdapter);
+        ((LinearLayoutManager)mMessageRecycler.getLayoutManager()).setStackFromEnd(true);
+
 
         //Send Message action
         mChatBox = findViewById(R.id.edittext_chatbox);
@@ -124,6 +128,17 @@ public class MessageListActivity extends AppCompatActivity {
                 mChatBox.setText("");
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private class Listener extends OnEventListener {
@@ -140,10 +155,10 @@ public class MessageListActivity extends AppCompatActivity {
                 JSONObject js = new JSONObject(data);
                 Message message = new Message(new ChatUser((js.get("User").toString())), js.get("Message").toString(), js.get("Date").toString());
                 messageList.add(message);
+                mMessageAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -163,9 +178,10 @@ public class MessageListActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String rawMsg) {
-        long now = new Date().getTime() / 1000;
-        String nowFormatted = DateUtils.formatDateTime(now);
-        Message message = new Message(thisUser, rawMsg, nowFormatted);
+        Date todaysDate = new Date();
+        long millis = todaysDate.getTime();
+        String formattedDate = DateUtils.formatDateTime(millis);
+        Message message = new Message(thisUser, rawMsg, formattedDate);
         //Fire "Sent Message" Event
         webSocket.send("Sent Message",
                 "{\"Message\":\"" + message.getMessage() +

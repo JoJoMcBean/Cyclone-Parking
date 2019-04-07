@@ -365,7 +365,7 @@ public class Socket {
 
             try {
                 // Parse message text
-                JSONObject response = new JSONObject(text.substring(6));
+                JSONObject response = new JSONObject(text.substring(6)); //Remove "null: "
                 Log.v(TAG, "New JSONObject "+response);
                 String event = response.getString("event");
                 JSONObject data = response.getJSONObject("data");

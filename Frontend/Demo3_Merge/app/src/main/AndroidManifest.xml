@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".chat.MessageListActivity"></activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register" />
@@ -37,14 +36,14 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ProfileActivity"
             android:label="Your Profile"
-            android:parentActivityName=".DashboardActivity" /> <!-- Spinner -->
+            android:parentActivityName=".DashboardActivity" />
+        <!-- Spinner -->
         <activity
             android:name=".spin.lot_Page"
             android:label="See Available Spots"
@@ -55,6 +54,13 @@
             android:name=".spin.SpinActivity"
             android:label="See Available Spots"
             android:parentActivityName=".DashboardActivity" />
+        <!-- Chat -->
+        <activity
+            android:name=".chat.MessageListActivity"
+            android:label="CyParking Chat"
+            android:parentActivityName=".DashboardActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+
     </application>
 
 </manifest>
