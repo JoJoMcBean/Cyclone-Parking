@@ -35,6 +35,9 @@ import com.example.cyparking.chat.Socket.OnEventResponseListener;
 
 import com.example.cyparking.parkinglog.ParkingLog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MessageListActivity extends AppCompatActivity {
     private static String URL = "ws://cs309-yt-2.misc.iastate.edu:8080";
     private static String WEBSOCKET_URL = URL + "/websocket/chat";
@@ -99,9 +102,14 @@ public class MessageListActivity extends AppCompatActivity {
     private class ResponseListener extends OnEventResponseListener {
         @Override
         public void onMessage(String event, String data) {
-            Toast.makeText(getBaseContext(), data , Toast.LENGTH_SHORT).show();
-            Message message = new Message(thisUser, data, 0000);
-            messageList.add(message);
+            try {
+                JSONObject js = new JSONObject(data);
+                Message message = new Message(thisUser, js.get("Message").toString(), 0000);
+                messageList.add(message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -115,17 +123,16 @@ public class MessageListActivity extends AppCompatActivity {
         webSocket.onEvent(Socket.EVENT_OPEN, socketOpenListener);
         //webSocket.onEvent(Socket.EVENT_RECONNECT_ATTEMPT, .....);
         //webSocket.onEvent(Socket.EVENT_CLOSED, .....);
-        webSocket.onEventResponse("Message Recieved", socketResponseListener);
+        webSocket.onEventResponse("Sent Message", socketResponseListener);
         //webSocket.send("Some event", "{"some data":"in JSON format"}");
         //webSocket.sendOnOpen("Some event", "{"some data":"in JSON format"}");
     }
 
     private void sendMessage(String rawMsg) {
-        Log.i("Message", rawMsg);
         //LocalDateTime now = LocalDateTime.now();
         Message message = new Message(thisUser, rawMsg, 0000);
         messageList.add(message);
-        webSocket.send(message.getMessage());
+        webSocket.send("Sent Message", "{\"Message\":\"" + message.getMessage() + "\"}");
     }
 
 }
