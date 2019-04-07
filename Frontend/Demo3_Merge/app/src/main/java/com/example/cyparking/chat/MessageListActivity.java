@@ -15,6 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.cyparking.DefaultUserSchema;
 import com.example.cyparking.LoginActivity;
 import com.example.cyparking.R;
@@ -22,11 +28,11 @@ import com.example.cyparking.R;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
@@ -39,19 +45,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MessageListActivity extends AppCompatActivity {
-    private static String URL = "ws://cs309-yt-2.misc.iastate.edu:8080";
-    private static String WEBSOCKET_URL = URL + "/websocket/chat";
+    private static String URL = "http://cs309-yt-2.misc.iastate.edu:8080";
+    private static String WEBSOCKET_URL = "ws://cs309-yt-2.misc.iastate.edu:8080/websocket/chat";
 
     private Button mChatBoxSend;
     private EditText mChatBox;
 
+    private RequestQueue mQueue; //Volley Request Queue
 
     private RecyclerView mMessageRecycler;
     private MessageListAdapter mMessageAdapter;
     private ArrayList<Message> messageList = new ArrayList<>();
 
-    public static ChatUser thisUser = new ChatUser("poop");
-    public static ChatUser testUser = new ChatUser("guy");
+    public static ChatUser thisUser;
 
     private OkHttpClient client;
     private Listener socketOpenListener;
@@ -64,6 +70,34 @@ public class MessageListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
+
+        mQueue = Volley.newRequestQueue(this);
+
+        //Load User Data
+        StringRequest getUser = new StringRequest(Request.Method.POST, URL + "/get/default",
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        String[] userInfo = response.split(",");
+                        DefaultUserSchema userData = new DefaultUserSchema(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], userInfo[5]);
+                        thisUser = new ChatUser(userData.getUsername());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(getBaseContext(), "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", LoginActivity.getToken());
+                return params;
+            }
+        };
+        mQueue.add(getUser);
 
         //Init
         client = new OkHttpClient();
@@ -104,7 +138,7 @@ public class MessageListActivity extends AppCompatActivity {
         public void onMessage(String event, String data) {
             try {
                 JSONObject js = new JSONObject(data);
-                Message message = new Message(thisUser, js.get("Message").toString(), 0000);
+                Message message = new Message(new ChatUser((js.get("User").toString())), js.get("Message").toString(), 0000);
                 messageList.add(message);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -131,8 +165,7 @@ public class MessageListActivity extends AppCompatActivity {
     private void sendMessage(String rawMsg) {
         //LocalDateTime now = LocalDateTime.now();
         Message message = new Message(thisUser, rawMsg, 0000);
-        messageList.add(message);
-        webSocket.send("Sent Message", "{\"Message\":\"" + message.getMessage() + "\"}");
+        webSocket.send("Sent Message", "{\"Message\":\"" + message.getMessage() + "\",\"User\":\"" + message.getSender().getUsername() + "\"}");
     }
 
 }
