@@ -32,10 +32,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import java.util.Date;
+
 import okhttp3.OkHttpClient;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
+
 import com.example.cyparking.chat.Socket.OnEventListener;
 import com.example.cyparking.chat.Socket.OnEventResponseListener;
 
@@ -62,8 +65,6 @@ public class MessageListActivity extends AppCompatActivity {
     private OkHttpClient client;
     private Listener socketOpenListener;
     private ResponseListener socketResponseListener;
-
-
     Socket webSocket;
 
     @Override
@@ -71,9 +72,8 @@ public class MessageListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
+        //Load current user username
         mQueue = Volley.newRequestQueue(this);
-
-        //Load User Data
         StringRequest getUser = new StringRequest(Request.Method.POST, URL + "/get/default",
                 new com.android.volley.Response.Listener<String>() {
                     @Override
@@ -89,9 +89,9 @@ public class MessageListActivity extends AppCompatActivity {
                         error.printStackTrace();
                         Toast.makeText(getBaseContext(), "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams() {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("token", LoginActivity.getToken());
                 return params;
@@ -115,8 +115,8 @@ public class MessageListActivity extends AppCompatActivity {
         mMessageRecycler.setAdapter(mMessageAdapter);
 
         //Send Message action
-        mChatBox= findViewById(R.id.edittext_chatbox);
-        mChatBoxSend= findViewById(R.id.button_chatbox_send);
+        mChatBox = findViewById(R.id.edittext_chatbox);
+        mChatBoxSend = findViewById(R.id.button_chatbox_send);
         mChatBoxSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,8 +128,8 @@ public class MessageListActivity extends AppCompatActivity {
 
     private class Listener extends OnEventListener {
         @Override
-        public void onMessage (String event) {
-            Toast.makeText(getBaseContext(), event + "WEBSOCKET OPENED" , Toast.LENGTH_SHORT).show();
+        public void onMessage(String event) {
+            Toast.makeText(getBaseContext(), "Chat Connected", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -138,7 +138,7 @@ public class MessageListActivity extends AppCompatActivity {
         public void onMessage(String event, String data) {
             try {
                 JSONObject js = new JSONObject(data);
-                Message message = new Message(new ChatUser((js.get("User").toString())), js.get("Message").toString(), 0000);
+                Message message = new Message(new ChatUser((js.get("User").toString())), js.get("Message").toString(), js.get("Date").toString());
                 messageList.add(message);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -155,17 +155,22 @@ public class MessageListActivity extends AppCompatActivity {
         webSocket = Socket.Builder.with(WEBSOCKET_URL).build();
         webSocket.connect();
         webSocket.onEvent(Socket.EVENT_OPEN, socketOpenListener);
+        webSocket.onEventResponse("Sent Message", socketResponseListener); //Trigger when "Sent Message" fires
         //webSocket.onEvent(Socket.EVENT_RECONNECT_ATTEMPT, .....);
         //webSocket.onEvent(Socket.EVENT_CLOSED, .....);
-        webSocket.onEventResponse("Sent Message", socketResponseListener);
         //webSocket.send("Some event", "{"some data":"in JSON format"}");
         //webSocket.sendOnOpen("Some event", "{"some data":"in JSON format"}");
     }
 
     private void sendMessage(String rawMsg) {
-        //LocalDateTime now = LocalDateTime.now();
-        Message message = new Message(thisUser, rawMsg, 0000);
-        webSocket.send("Sent Message", "{\"Message\":\"" + message.getMessage() + "\",\"User\":\"" + message.getSender().getUsername() + "\"}");
+        long now = new Date().getTime() / 1000;
+        String nowFormatted = DateUtils.formatDateTime(now);
+        Message message = new Message(thisUser, rawMsg, nowFormatted);
+        //Fire "Sent Message" Event
+        webSocket.send("Sent Message",
+                "{\"Message\":\"" + message.getMessage() +
+                        "\",\"User\":\"" + message.getSender().getUsername() +
+                        "\",\"Date\":\"" + message.getCreatedAt() + "\"}");
     }
 
 }

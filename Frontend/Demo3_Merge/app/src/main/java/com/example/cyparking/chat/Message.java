@@ -5,9 +5,9 @@ import com.example.cyparking.UserSchema;
 public class Message {
     String message;
     ChatUser sender;
-    long createdAt;
+    String createdAt;
 
-    public Message(ChatUser sender, String message, long createdAt) {
+    public Message(ChatUser sender, String message, String createdAt) {
         this.message = message;
         this.sender = sender;
         this.createdAt = createdAt;
@@ -21,7 +21,7 @@ public class Message {
         return message;
     }
 
-    public long getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 }
