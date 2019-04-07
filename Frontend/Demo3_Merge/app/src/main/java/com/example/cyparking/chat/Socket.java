@@ -188,6 +188,11 @@ public class Socket {
         return false;
     }
 
+    public boolean send(@NonNull String data){
+        return realWebSocket.send(data);
+
+
+    }
     /**
      * Set state listener which fired every time {@link Socket#state} changed.
      *

@@ -11,11 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="762231df-d599-4cf4-89e5-04e1d38619e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/ProfileActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLogAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLogAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Socket.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Socket.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,42 +31,43 @@
     <session id="695733070">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.18" value="1" />
-          <entry key="project.opened" value="6" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gradle" value="4" />
-          <entry key="java" value="68" />
-          <entry key="xml" value="33" />
+          <entry key="java" value="74" />
+          <entry key="xml" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Groovy" value="4" />
-          <entry key="JAVA" value="68" />
-          <entry key="XML" value="33" />
+          <entry key="JAVA" value="74" />
+          <entry key="XML" value="35" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="23" />
           <entry key="gradle" value="42" />
-          <entry key="java" value="4292" />
+          <entry key="java" value="4887" />
           <entry key="xml" value="238" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="42" />
-          <entry key="JAVA" value="4292" />
+          <entry key="JAVA" value="4887" />
           <entry key="PLAIN_TEXT" value="23" />
           <entry key="XML" value="238" />
         </counts>
@@ -78,11 +76,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-176">
-              <caret line="39" column="18" selection-start-line="39" selection-end-line="40" />
+            <state relative-caret-position="377">
+              <caret line="75" column="27" lean-forward="true" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -91,10 +89,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Message.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Socket.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="197">
+              <caret line="369" column="45" selection-start-line="369" selection-end-line="370" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/ProfileActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="100" selection-start-line="100" selection-end-line="100" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/LoginActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1470">
+              <caret line="126" column="34" selection-start-line="126" selection-end-line="127" />
             </state>
           </provider>
         </entry>
@@ -110,81 +129,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_message_list.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="74" column="90" selection-start-line="74" selection-start-column="90" selection-end-line="74" selection-end-column="90" />
+            <state relative-caret-position="555">
+              <caret line="54" selection-start-line="54" selection-end-line="54" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLogAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="52" column="29" selection-start-line="52" selection-start-column="25" selection-end-line="52" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/ProfileActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
-              <folding>
-                <element signature="e#6233#7448#0" expanded="true" />
-                <element signature="e#7447#7448#0" expanded="true" />
-                <element signature="e#6492#6842#0" expanded="true" />
-                <element signature="e#6841#6842#0" expanded="true" />
-                <element signature="e#8432#8747#0" expanded="true" />
-                <element signature="e#8746#8747#0" expanded="true" />
-                <element signature="e#8797#9002#0" expanded="true" />
-                <element signature="e#9001#9002#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/LoginActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="122" column="44" selection-start-line="122" selection-end-line="123" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/RegisterActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="147" column="9" selection-start-line="137" selection-start-column="8" selection-end-line="147" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="22" column="21" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="21" />
-              <folding>
-                <element signature="e#479#480#0" expanded="true" />
-                <element signature="e#510#511#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/UserSchema.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="29" selection-start-line="29" selection-end-line="29" />
             </state>
           </provider>
         </entry>
@@ -226,6 +187,9 @@
       <find>logs</find>
       <find>log.</find>
       <find>get</find>
+      <find>oneventresponse</find>
+      <find>socket</find>
+      <find>EVENT_OPEN</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -240,7 +204,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_message_sent.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/EchoWebSocketListener.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Socket.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/User.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/ChatUser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/UserSchema.java" />
@@ -257,10 +220,11 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_message_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Message.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLogAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/ProfileActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Socket.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListActivity.java" />
       </list>
     </option>
   </component>
@@ -274,6 +238,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -299,32 +265,18 @@
               <item name="cyparking" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="chat" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Demo3_Merge" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="cyparking" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="parkinglog" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Demo3_Merge" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="generatedJava" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
-    <property name="device.picker.selection" value="Nexus_5X_API_28_x86" />
+    <property name="device.picker.selection" value="Nexus_5X_API_25_2" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/layout" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
@@ -445,14 +397,14 @@
       <window_info id="Designer" order="6" />
       <window_info id="Capture Tool" order="7" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.32876712" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" visible="true" weight="0.32876712" />
+      <window_info anchor="bottom" id="Logcat" order="1" weight="0.32876712" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32876712" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32876712" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.36849314" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.32876712" />
+      <window_info active="true" anchor="bottom" id="Build" order="7" visible="true" weight="0.36849314" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" weight="0.32876712" />
       <window_info anchor="bottom" id="Thumbnails" order="9" visible="true" weight="0.16575342" />
       <window_info anchor="bottom" id="Find" order="10" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -518,9 +470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="31" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -528,16 +477,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="370">
           <caret line="94" column="83" selection-start-line="94" selection-start-column="83" selection-end-line="94" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Socket.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2281">
-          <caret line="452" column="5" selection-start-line="452" selection-start-column="5" selection-end-line="452" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -606,69 +545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <folding>
-            <element signature="e#119#120#0" expanded="true" />
-            <element signature="e#159#160#0" expanded="true" />
-            <element signature="e#192#193#0" expanded="true" />
-            <element signature="e#223#224#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_message_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="40" column="42" selection-start-line="40" selection-start-column="12" selection-end-line="40" selection-end-column="42" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_message.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="59" column="41" selection-start-line="59" selection-start-column="41" selection-end-line="59" selection-end-column="41" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="74" column="90" selection-start-line="74" selection-start-column="90" selection-end-line="74" selection-end-column="90" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Message.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/UserSchema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-176">
-          <caret line="39" column="18" selection-start-line="39" selection-end-line="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/RegisterActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="147" column="9" selection-start-line="137" selection-start-column="8" selection-end-line="147" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -679,37 +555,90 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/RegisterActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="147" column="9" selection-start-line="137" selection-start-column="8" selection-end-line="147" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/parkinglog/ParkingLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
+        <state relative-caret-position="330">
           <caret line="22" column="21" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="21" />
-          <folding>
-            <element signature="e#479#480#0" expanded="true" />
-            <element signature="e#510#511#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/UserSchema.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="122" column="44" selection-start-line="122" selection-end-line="123" />
+        <state relative-caret-position="1470">
+          <caret line="126" column="34" selection-start-line="126" selection-end-line="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/item_message.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="885">
+          <caret line="59" column="41" selection-start-line="59" selection-start-column="41" selection-end-line="59" selection-end-column="41" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_message_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/ProfileActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
+        <state relative-caret-position="15">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/Socket.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="369" column="45" selection-start-line="369" selection-end-line="370" />
           <folding>
-            <element signature="e#6233#7448#0" expanded="true" />
-            <element signature="e#7447#7448#0" expanded="true" />
-            <element signature="e#6492#6842#0" expanded="true" />
-            <element signature="e#6841#6842#0" expanded="true" />
-            <element signature="e#8432#8747#0" expanded="true" />
-            <element signature="e#8746#8747#0" expanded="true" />
-            <element signature="e#8797#9002#0" expanded="true" />
-            <element signature="e#9001#9002#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/cyparking/chat/MessageListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="75" column="27" lean-forward="true" selection-start-line="75" selection-start-column="27" selection-end-line="75" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
