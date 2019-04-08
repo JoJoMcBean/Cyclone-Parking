@@ -2,6 +2,8 @@ package com.example.demo.Socket.WebSocket;
 
 
 import com.example.demo.CurrentlyParked.CurrentlyParkedRepository;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,27 +13,24 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 
- * @author Vamsi Krishna Calpakkam
- *
- */
+
 @ServerEndpoint("/websocket/chat")
 @Component
 public class WebSocketServer {
 
     @Autowired
-	CurrentlyParkedRepository currentlyParkedRepository;
+	CurrentlyParkedRepository repo;
 	
 	// Store all socket session and their corresponding username.
     private static Map<Session, String> sessionUsernameMap = new HashMap<>();
     private static Map<String, Session> usernameSessionMap = new HashMap<>();
     
     private final Logger logger = LoggerFactory.getLogger(WebSocketServer.class);
-    
+
     @OnOpen
     public void onOpen(
     	      Session session, 
@@ -51,40 +50,49 @@ public class WebSocketServer {
     public void onMessage(Session session, String message) throws IOException
     {
         // Handle new messages
+		logger.info("Entered into Message: Got Message:"+message);
+		String username = sessionUsernameMap.get(session);
 
-    	logger.info("Entered into Message: Got Message:"+message);
-    	String username = sessionUsernameMap.get(session);
-    	/*
-    	int index = message.indexOf("Message\":") + 10;
-    	username = "mr.poop";
-    	String actualMessage = message.substring(index, message.length() - 20);
-    	logger.info(actualMessage);
-    	String[] test = actualMessage.split(" ");
-*/
-    	/*if (test[0].equals("park")) // Direct message to a user using the format "@username <message>"
-    	//{
-    		logger.info(test[0]);
-			logger.info(test[1]);
-			logger.info(test[2]);
-			logger.info(username);
-    		String lot = test[1];
-			Instant instant = Instant.now();
-			Long timeStampMillis = instant.toEpochMilli();
-    		Integer spot = Integer.parseInt(actualMessage.split(" ")[2]);
-    		logger.info("lot : " + lot);
-    		logger.info("spot: " + spot);
-    		currentlyParkedRepository.addParkedSpot(username, lot, spot, "GJS", timeStampMillis);
 
-    		/*
-    		String destUsername = message.split(" ")[0].substring(1); // don't do this in your code!
-    		sendMessageToPArticularUser(destUsername, "[DM] " + username + ": " + message);
-    		sendMessageToPArticularUser(username, "[DM] " + username + ": " + message);
-    		*/
-    	//}
-    	//else // Message to whole chat
-    	//{
-	    	broadcast(username + ": " + message);
-    	//}
+		try {
+			JSONObject jsonMessage = new JSONObject(message);
+			JSONObject data = new JSONObject(jsonMessage.get("data").toString());
+			logger.info(data.toString());
+			String username1 = data.get("User").toString();
+			String actualMessage = data.get("Message").toString();
+			logger.info(username + ": " + actualMessage);
+
+			if (actualMessage.startsWith("!park"))
+			{
+				String [] parkCommand = actualMessage.split(" ");
+				String lot = parkCommand[1];
+				Integer spot = Integer.parseInt(parkCommand[2]);
+
+				Instant instant = Instant.now();
+				Long timeStampMillis = instant.toEpochMilli();
+
+				logger.info("lot : " + lot);
+				logger.info("spot: " + spot);
+				logger.info(username1);
+				String license = repo.getLicenseFromUsername(username1);
+				logger.info(license);
+				logger.info(timeStampMillis.toString());
+				repo.addParkedSpot(username1, lot, spot, license, timeStampMillis);
+				logger.info("GOT PAST ADD");
+
+			}
+			else // Message to whole chat
+			{
+				broadcast(username + ": " + message);
+			}
+
+
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+
     }
  
     @OnClose

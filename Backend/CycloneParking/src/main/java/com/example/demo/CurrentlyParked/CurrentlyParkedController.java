@@ -47,10 +47,10 @@ public class CurrentlyParkedController {
         String [] info = tokenpaid.split(",");
         String token = info[0];
         Double paid = Double.parseDouble(info[1]);
-        String license = currentlyParkedRepository.getLicenseWithToken(token);
-        CurrentlyParked park = currentlyParkedRepository.selectEntry(license); //save the data that must be added to history
+        String username = currentlyParkedRepository.getUsernameFromToken(token);
+        CurrentlyParked park = currentlyParkedRepository.selectEntry(username); //save the data that must be added to history
 
-        currentlyParkedRepository.leaveSpot(license);
+        currentlyParkedRepository.leaveSpot(username);
         //user has left spot
 
 

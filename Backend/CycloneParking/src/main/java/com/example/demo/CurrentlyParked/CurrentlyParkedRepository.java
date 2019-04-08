@@ -15,10 +15,10 @@ public interface CurrentlyParkedRepository extends JpaRepository<CurrentlyParked
     List<Integer> getFilledSpots(String lot);
 
 
-    @Query(value = "DELETE  FROM currently_parked WHERE license = ?1", nativeQuery = true)
+    @Query(value = "DELETE  FROM currently_parked WHERE username = ?1", nativeQuery = true)
     @Modifying
     @Transactional
-    void leaveSpot(String license);
+    void leaveSpot(String username);
 
     @Query(value = "SELECT default_users.license FROM default_users INNER JOIN user_login ON user_login.username = default_users.username WHERE user_login.token = ?1", nativeQuery = true)
     String getLicenseWithToken(String token);
@@ -51,6 +51,9 @@ public interface CurrentlyParkedRepository extends JpaRepository<CurrentlyParked
     @Query(value = "SELECT timestart FROM parking_history WHERE username = ?1", nativeQuery = true)
     List<Object> selectTimestartsForUser(String username);
 
-    @Query(value = "SELECT * FROM currently_parked WHERE license = ?1", nativeQuery = true)
-    CurrentlyParked selectEntry(String license);
+    @Query(value = "SELECT * FROM currently_parked WHERE username = ?1", nativeQuery = true)
+    CurrentlyParked selectEntry(String username);
+
+    @Query(value = "SELECT license FROM currently_parked WHERE username = ?1", nativeQuery = true)
+    String getLicenseFromUsername(String username);
 }
