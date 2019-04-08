@@ -1,4 +1,4 @@
-package com.example.demo.user_login;
+package com.example.demo.UserLogin;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,7 +23,6 @@ public interface UserLoginRepository extends JpaRepository<UserLogin, String> {
     @Transactional
     @Query(value = "UPDATE user_login SET user_login.token = ?1 WHERE user_login.username = ?2", nativeQuery = true)
     void addToken(String token, String username);
-
 
 
 }

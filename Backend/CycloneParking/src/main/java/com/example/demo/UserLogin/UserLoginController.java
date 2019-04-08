@@ -1,27 +1,24 @@
-package com.example.demo.user_login;
+package com.example.demo.UserLogin;
 
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
 import java.util.UUID;
 
 
 @RestController
 @EnableWebMvc
-class UserLoginController {
+public class UserLoginController {
+
 
     @Autowired
     UserLoginRepository user_loginRepository;
-    userService userService;
 
     private final Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 

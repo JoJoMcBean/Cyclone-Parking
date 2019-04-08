@@ -1,23 +1,17 @@
-package com.example.demo.user_login;
+package com.example.demo.UserLogin;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.sun.javafx.beans.IDProperty;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.springframework.core.style.ToStringCreator;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @Entity
-@Table(name = "user_login")
+@Table(name = "UserLogin")
 public class UserLogin {
 
     @Id
@@ -41,6 +35,15 @@ public class UserLogin {
     @Column(name = "token")
     @NotFound(action = NotFoundAction.IGNORE)
     private String token;
+
+    public UserLogin(){}
+    public UserLogin(String username, String password, String user_type, String email, String token) {
+        this.username = username;
+        this.password = password;
+        this.user_type = user_type;
+        this.email = email;
+        this.token = token;
+    }
 
     public String getToken(){return token;}
 
