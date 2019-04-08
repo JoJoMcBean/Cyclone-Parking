@@ -124,7 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             userToken = response;
                             Log.i("USERTOKEN", userToken);
-                            startActivity(new Intent(LoginActivity.this, DashboardActivity.class)); //Go to dashboard
+                            startActivity(new Intent(getBaseContext(), DashboardActivity.class)); //Go to dashboard
+                            Toast.makeText(LoginActivity.this, "Welcome!",Toast.LENGTH_LONG).show();
                         }
                     }
                 },
@@ -132,7 +133,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(LoginActivity.this, "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                        mProgressBar.setVisibility(View.GONE);
+                        mLoginBtn.setVisibility(View.VISIBLE);
                     }
             }){
                 @Override

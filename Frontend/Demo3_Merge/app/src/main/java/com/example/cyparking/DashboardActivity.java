@@ -33,6 +33,9 @@ public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static String URL = "http://cs309-yt-2.misc.iastate.edu:8080";
 
+    //Modified for tests
+    public String userToken = LoginActivity.getToken();
+
     private RequestQueue mQueue;
     private DefaultUserSchema userData;
     private TextView navUsername;
@@ -44,8 +47,6 @@ public class DashboardActivity extends AppCompatActivity
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Toast.makeText(this, "Welcome!",Toast.LENGTH_LONG).show();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.message_button);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,33 +70,35 @@ public class DashboardActivity extends AppCompatActivity
         navUsername = (TextView) headerView.findViewById(R.id.header_username);
         navEmail = (TextView) headerView.findViewById(R.id.header_email);
 
-        //Load User username and email for header
-        mQueue = Volley.newRequestQueue(this);
-        StringRequest getUser = new StringRequest(Request.Method.POST, URL + "/get/default",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        String[] userInfo = response.split(",");
-                        userData = new DefaultUserSchema(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], userInfo[5]);
-                        navUsername.setText(userData.getUsername());
-                        navEmail.setText(userData.getEmail());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        Toast.makeText(getBaseContext(), "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("token", LoginActivity.getToken());
-                return params;
-            }
-        };
-        mQueue.add(getUser);
+        if (userToken.length() > 0) {
+            //Load User username and email for header
+            mQueue = Volley.newRequestQueue(this);
+            StringRequest getUser = new StringRequest(Request.Method.POST, URL + "/get/default",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            String[] userInfo = response.split(",");
+                            userData = new DefaultUserSchema(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], userInfo[5]);
+                            navUsername.setText(userData.getUsername());
+                            navEmail.setText(userData.getEmail());
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            Toast.makeText(getBaseContext(), "Unable to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("token", userToken);
+                    return params;
+                }
+            };
+            mQueue.add(getUser);
+        }
     }
 
     @Override

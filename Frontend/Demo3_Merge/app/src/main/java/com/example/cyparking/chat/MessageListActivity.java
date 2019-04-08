@@ -53,6 +53,9 @@ public class MessageListActivity extends AppCompatActivity {
     private static String URL = "http://cs309-yt-2.misc.iastate.edu:8080";
     private static String WEBSOCKET_URL = "ws://cs309-yt-2.misc.iastate.edu:8080/websocket/chat";
 
+    //For Tests
+    public String userToken = "";
+
     private Button mChatBoxSend;
     private EditText mChatBox;
 
@@ -74,6 +77,9 @@ public class MessageListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_list);
 
+        if (!(userToken.length() > 0)){
+            userToken = LoginActivity.getToken();
+        }
         //Load current user username
         mQueue = Volley.newRequestQueue(this);
         StringRequest getUser = new StringRequest(Request.Method.POST, URL + "/get/default",
@@ -95,7 +101,7 @@ public class MessageListActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("token", LoginActivity.getToken());
+                params.put("token", userToken);
                 return params;
             }
         };
