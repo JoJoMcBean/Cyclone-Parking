@@ -27,7 +27,11 @@ public class CurrentlyParked implements Serializable {
     @Id
     @Column(name = "spotnum")
     @NotFound(action = NotFoundAction.IGNORE)
+<<<<<<< HEAD
     private int spotnum;
+=======
+    private Integer spotnum;
+>>>>>>> b073ae6dd0916bfeb6a4ba574f5a37d162dcfe67
 
 
     @Column(name = "license")
