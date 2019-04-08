@@ -22,6 +22,12 @@ public class ParkingHistory implements Serializable {
     @NotFound(action = NotFoundAction.IGNORE)
     private String lotid;
 
+    @Column(name = "spotnum")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private Integer spotnum;
+
+
+
     @Id
     @Column(name = "timestart")
     @NotFound(action = NotFoundAction.IGNORE)
@@ -73,6 +79,13 @@ public class ParkingHistory implements Serializable {
 
     public void setPaid(Double paid) {
         this.paid = paid;
+    }
+    public Integer getSpotnum() {
+        return spotnum;
+    }
+
+    public void setSpotnum(Integer spotnum) {
+        this.spotnum = spotnum;
     }
 }
 class UserTime implements Serializable{

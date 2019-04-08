@@ -50,9 +50,9 @@ public class ParkingLogAdapter extends RecyclerView.Adapter<ParkingLogAdapter.Pa
 
         // Set item views based on your views and data model
         TextView textView = viewHolder.spotTextView;
-        textView.setText(log.getId());
+        textView.setText(log.getSpaceID());
         TextView textView2 = viewHolder.locationTextView;
-        textView2.setText(log.getLocation());
+        textView2.setText(log.getLotID());
 
     }
 

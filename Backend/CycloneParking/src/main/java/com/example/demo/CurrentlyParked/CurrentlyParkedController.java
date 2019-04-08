@@ -1,6 +1,4 @@
 package com.example.demo.CurrentlyParked;
-import com.example.demo.DefaultUsers.DefaultUsersRepository;
-import com.example.demo.ParkingHistory.ParkingHistoryRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +16,6 @@ public class CurrentlyParkedController {
 
     @Autowired
     CurrentlyParkedRepository currentlyParkedRepository;
-    DefaultUsersRepository defaultUsersRepository;
-    ParkingHistoryRepository parkingHistoryRepository;
 
     private final Logger logger = LoggerFactory.getLogger(CurrentlyParkedController.class);
 
@@ -46,13 +42,15 @@ public class CurrentlyParkedController {
 
 
     @RequestMapping(method = RequestMethod.POST, path = "/leaveSpot")
-    public void leaveSpot(String token) {
+    public void leaveSpot(String tokenpaid) {
         //String username = defaultUsersRepository.getUsernameFromToken(token)
-        Double paid = 10.;
-        String license = currentlyParkedRepository.getLicenseWithToken(token);
-        CurrentlyParked park = currentlyParkedRepository.selectEntry(license); //save the data that must be added to history
+        String [] info = tokenpaid.split(",");
+        String token = info[0];
+        Double paid = Double.parseDouble(info[1]);
+        String username = currentlyParkedRepository.getUsernameFromToken(token);
+        CurrentlyParked park = currentlyParkedRepository.selectEntry(username); //save the data that must be added to history
 
-        currentlyParkedRepository.leaveSpot(license);
+        currentlyParkedRepository.leaveSpot(username);
         //user has left spot
 
 
@@ -63,7 +61,7 @@ public class CurrentlyParkedController {
             currentlyParkedRepository.deleteOldest(park.getUsername());
         }
 
-        currentlyParkedRepository.insertEntry(park.getUsername(), park.getLotid(), park.getTimeparked(), timeStampMillis, paid);
+        currentlyParkedRepository.insertEntry(park.getUsername(), park.getLotid(), park.getSpotnum(),park.getTimeparked(), timeStampMillis, paid);
 
     }
 

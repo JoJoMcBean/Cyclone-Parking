@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface ParkingHistoryRepository  extends JpaRepository<ParkingHistory, String> {
 
@@ -20,5 +22,9 @@ public interface ParkingHistoryRepository  extends JpaRepository<ParkingHistory,
     @Transactional
     void insertEntry(String username, String lot, Long timestart, Long timeend, Double paid);
 
+    @Query(value = "SELECT username from user_login WHERE token = ?1", nativeQuery = true)
+    String getUsernameFromToken(String token);
 
+    @Query(value = "SELECT * from parking_history WHERE username = ?1", nativeQuery = true)
+    List<ParkingHistory> getHistoryForUser(String username);
 }

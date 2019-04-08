@@ -15,10 +15,10 @@ public interface CurrentlyParkedRepository extends JpaRepository<CurrentlyParked
     List<Integer> getFilledSpots(String lot);
 
 
-    @Query(value = "DELETE  FROM currently_parked WHERE license = ?1", nativeQuery = true)
+    @Query(value = "DELETE  FROM currently_parked WHERE username = ?1", nativeQuery = true)
     @Modifying
     @Transactional
-    void leaveSpot(String license);
+    void leaveSpot(String username);
 
     @Query(value = "SELECT default_users.license FROM default_users INNER JOIN user_login ON user_login.username = default_users.username WHERE user_login.token = ?1", nativeQuery = true)
     String getLicenseWithToken(String token);
@@ -38,19 +38,22 @@ public interface CurrentlyParkedRepository extends JpaRepository<CurrentlyParked
     @Query(value = "SELECT COUNT(*) FROM parking_history WHERE username = ?1", nativeQuery = true)
     Integer getEntriesPerUser(String username);
 
-    @Query(value = "DELETE FROM parking_history WHERE timestart IN (SELECT MIN(timestart) FROM (SELECT * FROM parking_history) as x WHERE username=?1", nativeQuery = true)
+    @Query(value = "DELETE FROM parking_history WHERE timestart IN (SELECT MIN(timestart) FROM (SELECT * FROM parking_history) as x WHERE username=?1)", nativeQuery = true)
     @Modifying
     @Transactional
     void deleteOldest(String username);
 
-    @Query(value = "INSERT INTO parking_history VALUES(?1, ?2, ?3, ?4, ?5)", nativeQuery = true)
+    @Query(value = "INSERT INTO parking_history VALUES(?1, ?2, ?3, ?4, ?5, ?6)", nativeQuery = true)
     @Modifying
     @Transactional
-    void insertEntry(String username, String lot, Long timestart, Long timeend, Double paid);
+    void insertEntry(String username, String lot, Integer spotnum, Long timestart, Long timeend, Double paid);
 
     @Query(value = "SELECT timestart FROM parking_history WHERE username = ?1", nativeQuery = true)
     List<Object> selectTimestartsForUser(String username);
 
-    @Query(value = "SELECT * FROM currently_parked WHERE license = ?1", nativeQuery = true)
-    CurrentlyParked selectEntry(String license);
+    @Query(value = "SELECT * FROM currently_parked WHERE username = ?1", nativeQuery = true)
+    CurrentlyParked selectEntry(String username);
+
+    @Query(value = "SELECT license FROM currently_parked WHERE username = ?1", nativeQuery = true)
+    String getLicenseFromUsername(String username);
 }

@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.cyparking.chat.MessageListActivity;
 import com.example.cyparking.spin.SpinActivity;
 
 public class DashboardActivity extends AppCompatActivity
@@ -91,7 +92,7 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_lots) {
             startActivity(new Intent(getBaseContext(), SpinActivity.class));
         } else if (id == R.id.nav_slideshow) {
-
+            startActivity(new Intent(getBaseContext(), MessageListActivity.class));
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
