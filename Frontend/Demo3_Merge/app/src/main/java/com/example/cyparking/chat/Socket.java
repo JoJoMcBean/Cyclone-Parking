@@ -188,6 +188,11 @@ public class Socket {
         return false;
     }
 
+    public boolean send(@NonNull String data){
+        return realWebSocket.send(data);
+
+
+    }
     /**
      * Set state listener which fired every time {@link Socket#state} changed.
      *
@@ -360,7 +365,8 @@ public class Socket {
 
             try {
                 // Parse message text
-                JSONObject response = new JSONObject(text);
+                JSONObject response = new JSONObject(text.substring(6)); //Remove "null: "
+                Log.v(TAG, "New JSONObject "+response);
                 String event = response.getString("event");
                 JSONObject data = response.getJSONObject("data");
 

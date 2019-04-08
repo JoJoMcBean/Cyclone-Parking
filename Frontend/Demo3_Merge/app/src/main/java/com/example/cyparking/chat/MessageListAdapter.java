@@ -58,10 +58,10 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     public void onBindViewHolder(MessageListViewHolder holder, int position) {
         Message message = (Message) mMessageList.get(position);
 
-        if (!message.getSender().username.equals(MessageListActivity.getCurrentUser().username)) {
+        if (!message.getSender().username.equals(MessageListActivity.getCurrentUser().getUsername())) {
             // Show received message in left linearlayout.
             holder.leftMsgLayout.setVisibility(ConstraintLayout.VISIBLE);
-            holder.leftMsgTime.setText(DateUtils.formatDateTime(message.getCreatedAt()));
+            holder.leftMsgTime.setText(message.getCreatedAt());
             holder.leftMsgName.setText(message.getSender().getUsername());
             holder.leftMsgTextView.setText(message.getMessage());
             // Remove left linearlayout.The value should be GONE, can not be INVISIBLE
@@ -72,7 +72,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         else {
             // Show sent message in right linearlayout.
             holder.rightMsgLayout.setVisibility(ConstraintLayout.VISIBLE);
-            holder.rightMsgTime.setText(DateUtils.formatDateTime(message.getCreatedAt()));
+            holder.rightMsgTime.setText(message.getCreatedAt());
             holder.rightMsgTextView.setText(message.getMessage());
             // Remove left linearlayout.The value should be GONE, can not be INVISIBLE
             holder.leftMsgLayout.setVisibility(ConstraintLayout.GONE);
