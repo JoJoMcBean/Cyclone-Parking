@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.cyparking.LoginActivity;
 import com.example.cyparking.R;
 
 import org.json.JSONException;
@@ -38,15 +39,18 @@ import java.util.List;
 import java.util.Map;
 
 public class lot_Page extends AppCompatActivity {
-    String url = "http://cs309-yt-2.misc.iastate.edu:8080/update";
+
+
+    String url = "http://cs309-yt-2.misc.iastate.edu:8080/takeSpot";
     GridView gridView;
     private String available_spot;
     private String unavailable_spot;
     private String path;
+    private String lot;
     private boolean[] Spot_Status;
     static final String[] numbers = new String[]{
-            "1", "2", "3", "4", "5",
-            "6", "7", "8", "9", "10"};
+            "0", "1", "2", "3", "4",
+            "5", "6", "7", "8", "9"};
     int available_color = Color.GREEN;
     int unavailable_color = Color.RED;
 
@@ -63,6 +67,8 @@ public class lot_Page extends AppCompatActivity {
         Spot_Status = new boolean[intent.getBooleanArrayExtra("Spot_Array").length];
         Spot_Status = intent.getBooleanArrayExtra("Spot_Array");
         path = intent.getStringExtra("Path");
+        lot = intent.getStringExtra("Lot");
+        Toast.makeText(this, lot, Toast.LENGTH_SHORT).show();
 
         final List<String> test = new ArrayList<String>(Arrays.asList(numbers));
 
@@ -74,7 +80,7 @@ public class lot_Page extends AppCompatActivity {
             public View getView(int position, View convertView, ViewGroup parent){
                 View view = super.getView(position, convertView, parent);
 
-                if(Spot_Status[position] == true)
+                if(Spot_Status[position] == false)
                 {
                     view.setBackgroundColor(unavailable_color); // available -> green
                 }
@@ -100,18 +106,21 @@ public class lot_Page extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), Boolean.toString(Spot_Status[position]), Toast.LENGTH_SHORT).show();
 
 
-                if (Spot_Status[position] == true) {
+                if (Spot_Status[position] == false) {
 
                     dialog_spotTaken();
-                   // Request_takeSpot(position);
+                    // Request_takeSpot(position);
 
-                } else if (Spot_Status[position] == false) {
+                } else if (Spot_Status[position] == true) {
                     dialog_spotFree(position);
-                    try {
-                        Request_takeSpotJson(position);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Request_takeSpotJson(position);
+//                       // StringRequest_takeSpot(position);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+
+                    StringRequest_takeSpot(position);
 
 //                    Request_takeSpot(position);
                 }
@@ -151,7 +160,11 @@ public class lot_Page extends AppCompatActivity {
 
 
                                 gridView.getChildAt(num).setBackgroundColor(Color.RED);
+                                Intent next = new Intent(getApplicationContext(), infoPage.class);
+                                startActivity(next);
                                 dialog.cancel();
+
+
                             }
                         })
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -168,32 +181,34 @@ public class lot_Page extends AppCompatActivity {
 
     public void Request_takeSpotJson(final int num) throws JSONException {
         JSONObject data = new JSONObject();
-        data.put("spotNum",num+1);
-        data.put("isFilled",true);
+        data.put("lot",lot);
+        data.put("spot",num);
+        data.put("token", LoginActivity.getToken());
+        Log.d("why null", lot + " " + num);
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url+path, data, new Response.Listener<JSONObject>() {
-           @Override
-           public void onResponse(JSONObject response) {
-              Log.d("rua",response.toString());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, data, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("rua",response.toString());
 
-           }
-       }, new Response.ErrorListener() {
-           @Override
-           public void onErrorResponse(VolleyError error) {
-               error.printStackTrace();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
 
-           }
-       });
+            }
+        });
 
-       requestQueue.add(jsonObjectRequest);
+        requestQueue.add(jsonObjectRequest);
     }
 
 
 
-    public void Request_takeSpot(final int num) {
+    public void StringRequest_takeSpot(final int num) {
 
-        String path = "";
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -201,7 +216,6 @@ public class lot_Page extends AppCompatActivity {
             public void onResponse(String response) {
                 Toast.makeText(lot_Page.this, response, Toast.LENGTH_LONG).show();
                 Log.d("xxx", "onResponse: " + response);
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -212,14 +226,12 @@ public class lot_Page extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parms = new HashMap<String, String>();
-                String number = Integer.toString(num+1);
-                String result = "true";
-                String sent = number + "," + result;
-                parms.put("spotNumFilled",sent);
+                String result = "";
+                result = lot + "," + num + "," + LoginActivity.getToken();
+                Log.d("test", result);
+                parms.put("lotspottoken",result);
 
-
-
-                return super.getParams();
+                return parms;
             }
         };
 
@@ -236,9 +248,21 @@ public class lot_Page extends AppCompatActivity {
                 TypedValue.COMPLEX_UNIT_DIP, dps, r.getDisplayMetrics()));
         return px;
 
-
     }
 
-}
 
+    public  int total_spot(String a, String b)
+    {
+        return 10;
+    }
+
+    public String test_info(String a, String b)
+    {
+        return "mr.poop,A,9";
+    }
+    public String take_spot(String a, String b)
+    {
+        return "Spot Added";
+    }
+}
 

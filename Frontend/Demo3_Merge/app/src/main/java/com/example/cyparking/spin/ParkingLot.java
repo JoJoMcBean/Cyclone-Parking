@@ -42,7 +42,7 @@ public class ParkingLot {
         int counter = 0;
         for(int i=0; i<spots_quantity; i++)
         {
-            if(spot_array[i].getStatus() == false)
+            if(spot_array[i].getStatus() == true)
             {
                 counter ++;
             }
@@ -57,7 +57,7 @@ public class ParkingLot {
         int counter = 0;
         for(int i=0; i<spots_quantity; i++)
         {
-            if(spot_array[i].getStatus() == true)
+            if(spot_array[i].getStatus() == false)
             {
                 counter ++;
             }
