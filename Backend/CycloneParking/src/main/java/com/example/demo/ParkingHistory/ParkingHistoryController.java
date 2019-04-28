@@ -19,6 +19,11 @@ public class ParkingHistoryController {
 
     private final Logger logger = LoggerFactory.getLogger(ParkingHistoryController.class);
 
+    /**
+     * Returns the parking history for a user
+     * @param info      Contains the unique token of a user
+     * @return          The complete parking history
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/history")
     public List<ParkingHistory> getHistory(@RequestBody Map<String, Object> [] info){
      String username = parkingHistoryRepository.getUsernameFromToken(info[0].get("token").toString());

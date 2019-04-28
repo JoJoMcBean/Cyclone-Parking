@@ -11,8 +11,8 @@ public class CustomConfigurator extends ServerEndpointRegistration.Configurator 
     private static volatile BeanFactory context;
 
     @Override
-    public <T> T getEndpointInstance(Class<T> Endpoint) throws InstantiationException {
-        return context.getBean(Endpoint);
+    public <T> T getEndpointInstance(Class<T> endpoint) throws InstantiationException {
+        return context.getBean(endpoint);
     }
 
     @Override

@@ -22,7 +22,11 @@ public class UserLoginController {
 
     private final Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 
-
+    /**
+     * Adds a user to the user_login table
+     * @param user      the user data to add
+     * @return          the user that was added
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/add/user")
     public UserLogin createUser(@Valid @RequestBody UserLogin user) {
 
@@ -33,6 +37,11 @@ public class UserLoginController {
 
         }
 
+    /**
+     * Updates user_login table
+     * @param updateUser  new user data
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/update")
     public UserLogin update(@Valid @RequestBody UserLogin updateUser){
         if(user_loginRepository.existsById(updateUser.getUsername())) {
@@ -41,16 +50,11 @@ public class UserLoginController {
         else return null;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public UserLogin deleteUser(@Valid @RequestBody UserLogin deleteUser){
-        if(user_loginRepository.existsById(deleteUser.getUsername())) {
-            user_loginRepository.delete(deleteUser);
-            return deleteUser;
-        }
-        return null;
-    }
 
-
+    /**
+     * Returns all users in the user_login table
+     * @return  list of all users
+     */
     @RequestMapping(method = RequestMethod.GET, path = "/users")
     public List<UserLogin> getAllUsers() {
         logger.info("Entered into Controller Layer");
@@ -58,16 +62,32 @@ public class UserLoginController {
         logger.info("Number of Records Fetched:" + results.size());
         return results;
     }
+
+    /**
+     * Returns user info for a specified username
+     * @param username
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, path = "/users/{username}")
     public UserLogin findUserByUsername(@PathVariable("username") String username) {
         return user_loginRepository.getUser(username);
     }
+
+    /**
+     * Returns all username in the user_login table
+     * @return
+     */
     @RequestMapping(method = RequestMethod.GET, path = "/usernames")
     public List<String> getUsernames(){
         List<String> results = user_loginRepository.getUsernames();
         return results;
     }
 
+    /**
+     * Checks if the user has inputted their correct password
+     * @param userpass
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/authentication")
     public String login(String userpass) {
         String[] login = userpass.split(",");
@@ -81,12 +101,18 @@ public class UserLoginController {
         if(userCheck.getPassword().equals(password) && user_loginRepository.existsById(username)){
             token = String.valueOf(UUID.randomUUID());
             user_loginRepository.addToken(token, username);
-            return token;
+            return token + "," + userCheck.getUser_type();
         }
         else{
             return "failed";
         }
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/getUsernameByToken")
+    public String getUsernameByToken(String token) {
+        String username = user_loginRepository.getUsernameByToken(token);
+        return username;
     }
 
 }

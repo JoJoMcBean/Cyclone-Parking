@@ -66,7 +66,7 @@ public class UserLoginTest {
     }
 
     @Test
-    public void addAllUsernames(){
+    public void getAllUsernames(){
         List<String> usernames = new ArrayList<String>();
         String user1 = "username1";
         String user2 = "username2";

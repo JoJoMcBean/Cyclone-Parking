@@ -19,28 +19,46 @@ public class CurrentlyParkedController {
 
     private final Logger logger = LoggerFactory.getLogger(CurrentlyParkedController.class);
 
+    /**
+     * This method returns all the rows in the Currently Parked table
+     * @return list of all data in Currently Parked table
+     */
     @RequestMapping(method = RequestMethod.GET, path = "/getFilled")
     public List<CurrentlyParked> getAllFilledSpots(){
         return currentlyParkedRepository.findAll();
     }
 
 
+    /**
+     * Returns all filled spots for a specific lot
+     * @param lot   the specified lot the client wants data for
+     * @return      list of data from the specified lot
+     */
     @RequestMapping(method = RequestMethod.GET, path = "/getFilled/{lotid}")
     public List<Integer> getFilledSpots(@PathVariable("lotid") String lot){
         return currentlyParkedRepository.getFilledSpots(lot);
     }
 
+    /**
+     * Returns the user the status of their car
+     * @param token     the unique token used to indentify each user
+     * @return          returns a String of the information of where the user is parked
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/getParkedInfo")
     public String getParkedInfo(String token){
         logger.info("Token: " + token);
        String license = currentlyParkedRepository.getLicenseWithToken(token);
-       logger.info(currentlyParkedRepository.selectLicense(license).toString());
+       //logger.info(currentlyParkedRepository.selectLicense(license).toString());
         return currentlyParkedRepository.selectLicense(license);
 
     }
 
 
-
+    /**
+     * Allows the user to leave a spot by deleting data from the currently parked table
+     * This method also adds to the parking history after the user leaves
+     * @param tokenpaid     the token of the user and how much they paid
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/leaveSpot")
     public void leaveSpot(String tokenpaid) {
         //String username = defaultUsersRepository.getUsernameFromToken(token)
@@ -66,7 +84,11 @@ public class CurrentlyParkedController {
     }
 
 
-
+    /**
+     * This method takes a spot for a user by adding their data to the currently parked table
+     * @param lotspottoken the lot and spot where the user parked and the user's token
+     * @return
+     */
     @RequestMapping(method = RequestMethod.POST, path = "/takeSpot")
     public String takeSpot(String lotspottoken){
         String [] info = lotspottoken.split(",");
@@ -82,6 +104,7 @@ public class CurrentlyParkedController {
         park.setLicense(license);
         park.setLotid(lot);
         park.setSpotnum(spot);
+
         Instant instant = Instant.now();
         Long timeStampMillis = instant.toEpochMilli();
         park.setTimeparked(timeStampMillis);

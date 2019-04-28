@@ -21,9 +21,7 @@ public class CurrentlyParked implements Serializable {
     @JoinColumn(name = "lotid")
     @NotFound(action = NotFoundAction.IGNORE)
     private String lotid;
-
-
-
+    
     @Id
     @Column(name = "spotnum")
     @NotFound(action = NotFoundAction.IGNORE)

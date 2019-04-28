@@ -74,7 +74,13 @@ public class WebSocketServer {
 				logger.info("lot : " + lot);
 				logger.info("spot: " + spot);
 				logger.info(username1);
-				String license = repo.getLicenseFromUsername(username1);
+				String license = "";
+				try {
+					license = repo.getLicenseFromUsername(username1);
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
 				logger.info(license);
 				logger.info(timeStampMillis.toString());
 				repo.addParkedSpot(username1, lot, spot, license, timeStampMillis);

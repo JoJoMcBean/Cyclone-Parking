@@ -27,7 +27,6 @@ public class ParkingHistory implements Serializable {
     private Integer spotnum;
 
 
-
     @Id
     @Column(name = "timestart")
     @NotFound(action = NotFoundAction.IGNORE)

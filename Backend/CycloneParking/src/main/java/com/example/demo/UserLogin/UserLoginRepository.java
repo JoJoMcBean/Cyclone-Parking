@@ -24,5 +24,6 @@ public interface UserLoginRepository extends JpaRepository<UserLogin, String> {
     @Query(value = "UPDATE user_login SET user_login.token = ?1 WHERE user_login.username = ?2", nativeQuery = true)
     void addToken(String token, String username);
 
-
+    @Query(value = "Select username from user_login WHERE token = ?1", nativeQuery = true)
+    String getUsernameByToken(String token);
 }

@@ -48,8 +48,6 @@ public interface CurrentlyParkedRepository extends JpaRepository<CurrentlyParked
     @Transactional
     void insertEntry(String username, String lot, Integer spotnum, Long timestart, Long timeend, Double paid);
 
-    @Query(value = "SELECT timestart FROM parking_history WHERE username = ?1", nativeQuery = true)
-    List<Object> selectTimestartsForUser(String username);
 
     @Query(value = "SELECT * FROM currently_parked WHERE username = ?1", nativeQuery = true)
     CurrentlyParked selectEntry(String username);
