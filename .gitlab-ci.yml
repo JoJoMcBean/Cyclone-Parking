@@ -36,7 +36,7 @@ maven-test:
 autoDeploy:
   stage: autodeploy
   tags:
-   - backend_autodeploy
+   - backend_tag
   script:
     - cd Backend/CycloneParking
     - mvn package
