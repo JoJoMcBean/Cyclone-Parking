@@ -26,7 +26,7 @@ maven-build:
 maven-test:
   stage: maventest
   tags:
-    - backend
+    - backend_tag
   script:
     - cd Backend/CycloneParking 
     - mvn test
