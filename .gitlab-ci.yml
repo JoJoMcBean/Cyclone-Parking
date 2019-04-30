@@ -50,7 +50,7 @@ autoDeploy:
 # Android runner should have docker as executor.
 android-build:
 image: alpine:latest
- stage: androidbuild
+stage: androidbuild
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/Demo3_merge
