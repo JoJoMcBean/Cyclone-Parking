@@ -49,23 +49,23 @@ autoDeploy:
 # Ensure the tag matches with the tag created for Android runner
 # Android runner should have docker as executor.
 android-build:
-image: alpine:latest
-stage: androidbuild
-  before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/Demo3_merge
-  tags:
-   frontend_tag
-  script:
-    - cd Frontend/Demo3_merge
-    - ./gradlew assemble
-  artifacts:
-    paths:
-    - Frontend/Demo3_merge/app/build/outputs/
+    image: javiersantos/android-ci:latest
+    stage: androidbuild
+    before_script:
+        - export GRADLE_USER_HOME=`pwd`/.gradle
+        - chmod +x ./Frontend/Demo3_merge
+    tags:
+        - frontend_tag
+    script:
+        - cd Frontend/Demo3_merge
+        - ./gradlew assemble
+    artifacts:
+        paths:
+            - Frontend/Demo3_merge/app/build/outputs/
 #    
 # To run Android unit tests.   
 unitTests:
-  image: alpine:latest
+  image: javiersantos/android-ci:latest
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
