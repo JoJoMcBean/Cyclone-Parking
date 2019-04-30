@@ -53,15 +53,15 @@ android-build:
     stage: androidbuild
     before_script:
         - export GRADLE_USER_HOME=`pwd`/.gradle
-        - chmod +x ./Frontend/Demo3_merge
+        - chmod +x ./Frontend/Demo3_Merge
     tags:
         - frontend_tag
     script:
-        - cd Frontend/Demo3_merge
+        - cd Frontend/Demo3_Merge
         - ./gradlew assemble
     artifacts:
         paths:
-            - Frontend/Demo3_merge/app/build/outputs/
+            - Frontend/Demo3_Merge/app/build/outputs/
 #    
 # To run Android unit tests.   
 unitTests:
@@ -69,9 +69,9 @@ unitTests:
   stage: androidtest
   before_script:
     - export GRADLE_USER_HOME=`pwd`/.gradle
-    - chmod +x ./Frontend/Demo3_merge/gradlew
+    - chmod +x ./Frontend/Demo3_Merge/gradlew
   tags:
   - frontend_tag
   script:
-    - cd Frontend/Demo3_merge
+    - cd Frontend/Demo3_Merge
     - ./gradlew test
