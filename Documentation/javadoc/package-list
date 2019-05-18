@@ -1,0 +1,11 @@
+com.example.demo
+com.example.demo.CurrentlyParked
+com.example.demo.DefaultUsers
+com.example.demo.LotInfo
+com.example.demo.MockTest
+com.example.demo.MockitoTests
+com.example.demo.ParkingHistory
+com.example.demo.Reports
+com.example.demo.Socket.WebSocket
+com.example.demo.Ticket
+com.example.demo.UserLogin
